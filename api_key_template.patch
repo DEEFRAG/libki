@@ -1,0 +1,33 @@
+diff --git a/root/dynamic/templates/administration/settings/index.tt b/root/dynamic/templates/administration/settings/index.tt
+index 0e78886..7a22008 100644
+--- a/root/dynamic/templates/administration/settings/index.tt
++++ b/root/dynamic/templates/administration/settings/index.tt
+@@ -1173,12 +1173,12 @@
+                     <div class="input-group form-inline">
+                         <input type="hidden" id="ApiKeys" name="ApiKeys" value='[% ApiKeys %]'>
+ 
+-                        <label class="sr-only" for="apiKeyNote">Create API key</label>
++                        <label class="sr-only" for="apiKeyNote">[% c.loc("Create API key") %]</label>
+                         <div class="input-group mb-2 mr-sm-2">
+                             <div class="input-group-prepend">
+-                                <div class="input-group-text">Note</div>
++                                <div class="input-group-text">[% c.loc("Note") %]</div>
+                             </div>
+-                            <input type="text" class="form-control" id="apiKeyNote" pattern="([a-zA-Z0-9 ]+){2,}" placeholder="What is this api key for?">
++                            <input type="text" class="form-control" id="apiKeyNote" pattern="([a-zA-Z0-9 ]+){2,}" placeholder="[% c.loc("What is this api key for?") %]">
+                             <script lang="text/javascript">
+                                 $(document).on("input", "#apiKeyNote", function (event) {
+                                     if (this.checkValidity()) {
+@@ -1194,10 +1194,10 @@
+ 
+                         </div>
+ 
+-                        <label class="sr-only" for="apiKeyType">API key type</label>
++                        <label class="sr-only" for="apiKeyType">[% c.loc("API key type") %]</label>
+                         <div class="input-group mb-2 mr-sm-2">
+                             <div class="input-group-prepend">
+-                                <div class="input-group-text">Type</div>
++                                <div class="input-group-text">[% c.loc("Type") %]</div>
+                             </div>
+                             <select class="form-control" id="apiKeyType">
+                                 <option value="PrintStation">[% c.loc("Print Station") %]</option>
