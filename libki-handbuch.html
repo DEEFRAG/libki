@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Libki Handbuch (Deutsch)</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --text: #1a1a1a;
+    --muted: #5a5a5a;
+    --accent: #2b6cb0;
+    --border: #e2e2e2;
+    --code-bg: #f5f5f5;
+    --note-bg: #fff8e1;
+    --note-border: #f0c14b;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 6rem;
+    line-height: 1.65;
+  }
+  h1, h2, h3, h4, h5 { line-height: 1.25; scroll-margin-top: 1rem; }
+  h1 { font-size: 2rem; border-bottom: 3px solid var(--accent); padding-bottom: .5rem; }
+  h2 { font-size: 1.5rem; margin-top: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: .3rem; }
+  h3 { font-size: 1.2rem; margin-top: 2rem; color: var(--accent); }
+  h4 { font-size: 1.05rem; margin-top: 1.5rem; }
+  h5, h6 { font-size: 1rem; margin-top: 1.2rem; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code {
+    background: var(--code-bg);
+    padding: .15em .35em;
+    border-radius: 4px;
+    font-size: .9em;
+    font-family: "SF Mono", Consolas, Monaco, monospace;
+  }
+  pre {
+    background: var(--code-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    border: 1px solid var(--border);
+  }
+  pre code { background: none; padding: 0; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+  }
+  table.params td, table.params th {
+    border: 1px solid var(--border);
+    padding: .5rem .75rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  .note {
+    background: var(--note-bg);
+    border-left: 4px solid var(--note-border);
+    padding: .75rem 1rem;
+    margin: 1rem 0;
+    border-radius: 4px;
+  }
+  .note strong { display: block; margin-bottom: .3rem; }
+  .banner { max-width: 100%; border-radius: 8px; margin: 1rem 0; }
+  nav.toc {
+    background: #fafafa;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0 2.5rem;
+  }
+  nav.toc ul { margin: .3rem 0; padding-left: 1.2rem; }
+  nav.toc > ul { padding-left: 1rem; }
+  .meta { color: var(--muted); font-size: .95rem; }
+  footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: .9rem; }
+  .hinweis-uebersetzer {
+    background: #eef4ff;
+    border: 1px solid #b9d2f5;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    font-size: .95rem;
+  }
+</style>
+</head>
+<body>
+
+<h1>Libki Handbuch</h1>
+<p class="meta">Kyle M Hall &lt;kyle@kylehall.info&gt; — Version, 2026-06-29<br>
+Inoffizielle deutsche Übersetzung.</p>
+
+<div class="hinweis-uebersetzer">
+<strong>Hinweis zur Übersetzung:</strong> Es existiert derzeit keine offizielle deutsche Version des Libki-Handbuchs. Dies ist eine inoffizielle Übersetzung des englischen Originals (<a href="https://manual.libki.org/master/libki-manual.html" target="_blank">manual.libki.org</a>, Stand 29.06.2026). Befehle, Konfigurationsbeispiele, Dateinamen und Codeblöcke wurden unverändert aus dem Original übernommen.
+</div>
+
+<img class="banner" src="https://manual.libki.org/master/images/libki-banner.png" alt="Libki Kiosk Management System">
+
+<nav class="toc">
+<strong>Inhaltsverzeichnis</strong>
+<ul>
+<li><a href="#lizenz">Lizenz</a></li>
+<li><a href="#einleitung">1. Einleitung</a>
+  <ul>
+    <li><a href="#was-ist-libki">1.1. Was ist Libki?</a></li>
+    <li><a href="#serverempfehlungen">1.2. Empfehlungen für den Libki-Server</a></li>
+    <li><a href="#mitwirken">1.3. Beiträge leisten</a></li>
+  </ul>
+</li>
+<li><a href="#installation">2. Installation</a>
+  <ul>
+    <li><a href="#einstiegsinstallation">2.1. Automatische Installation in einem Schritt</a></li>
+    <li><a href="#alternative-methode">2.2. Alternative Methode</a></li>
+    <li><a href="#docker">2.3. Docker</a></li>
+    <li><a href="#tls-ssl">2.4. Libki-Server mit TLS/SSL verwenden</a></li>
+  </ul>
+</li>
+<li><a href="#konfiguration">3. Konfiguration</a>
+  <ul>
+    <li><a href="#einstellungen">3.1. Einstellungen</a></li>
+    <li><a href="#schliesszeiten">3.2. Schließzeiten</a></li>
+    <li><a href="#druckverwaltung-2">3.3. Druckverwaltung</a></li>
+  </ul>
+</li>
+<li><a href="#administration">4. Administration</a>
+  <ul><li><a href="#statistik-verlauf">4.1. Statistik &amp; Verlauf</a></li></ul>
+</li>
+<li><a href="#desktop-client">5. Desktop-Client</a>
+  <ul>
+    <li><a href="#windows">5.1. Windows</a></li>
+    <li><a href="#linux">5.2. Linux</a></li>
+    <li><a href="#konfigurationsoptionen">5.3. Konfigurationsoptionen</a></li>
+  </ul>
+</li>
+<li><a href="#backup">6. Sicherung &amp; Wiederherstellung</a>
+  <ul>
+    <li><a href="#db-sichern">6.1. Datenbank sichern</a></li>
+    <li><a href="#dateien-sichern">6.2. Serverdateien sichern</a></li>
+    <li><a href="#db-wiederherstellen">6.3. Datenbanksicherung wiederherstellen</a></li>
+    <li><a href="#dateien-wiederherstellen">6.4. Sicherung der Serverdateien wiederherstellen</a></li>
+  </ul>
+</li>
+<li><a href="#aktualisierung">7. Server aktualisieren</a>
+  <ul>
+    <li><a href="#vorsichtsmassnahmen">7.1. Vorsichtsmaßnahmen</a></li>
+    <li><a href="#neueste-version">7.2. Neueste Version holen und Datenbank aktualisieren</a></li>
+    <li><a href="#serverdateien-aktualisieren">7.3. Serverdateien aktualisieren</a></li>
+  </ul>
+</li>
+<li><a href="#beitraege">8. Mitwirken</a>
+  <ul>
+    <li><a href="#client-server">8.1. Client &amp; Server</a></li>
+    <li><a href="#uebersetzung">8.2. Übersetzung</a></li>
+    <li><a href="#handbuch">8.3. Handbuch</a></li>
+  </ul>
+</li>
+<li><a href="#credits">9. Credits</a>
+  <ul><li><a href="#autoren">9.1. Autoren</a></li></ul>
+</li>
+</ul>
+</nav>
+
+<h2 id="lizenz">Lizenz</h2>
+<p>Dieses Werk ist unter der Creative-Commons-Lizenz „Namensnennung – Nicht kommerziell – Weitergabe unter gleichen Bedingungen 3.0 Unported“ lizenziert. Eine Kopie dieser Lizenz finden Sie unter <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">http://creativecommons.org/licenses/by-nc-sa/3.0/</a> oder senden Sie einen Brief an Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.</p>
+
+<h2 id="einleitung">1. Einleitung</h2>
+
+<h3 id="was-ist-libki">1.1. Was ist Libki?</h3>
+<p>Libki ist ein freies, quelloffenes, plattformübergreifendes System zur Reservierung und Zeitverwaltung von PCs, mit dem sich zeitlich begrenzter Zugang zu Computern in einem Netzwerk realisieren lässt. Libki eignet sich ideal für Umgebungen, in denen eine kontrollierte Computernutzung entscheidend ist – etwa öffentliche Zugangssysteme, Bibliotheken, Schulcomputerräume und mehr! Es besteht aus zwei Hauptbestandteilen: dem Libki-Server und dem Libki-Client.</p>
+<p>Libki kann außerdem als Druckverwaltungsdienst dienen, sodass Benutzer sowohl von Libki-gesteuerten Clients als auch per Datei-Upload auf den Libki-Server drucken können.</p>
+<p>Weitere Informationen zu Libki finden Sie auf der offiziellen Libki-Website <a href="https://libki.org">libki.org</a>.</p>
+
+<h4>1.1.1. Der Libki-Server</h4>
+<p>Der Libki-Server nutzt ein webbasiertes Administrationssystem, das von jedem vernetzten PC aus über einen Webbrowser aufgerufen werden kann. Über die Web-Administration lassen sich Benutzer anlegen und löschen, das verbleibende Zeitguthaben eines Kontos ändern, Nachrichten an Benutzer senden oder hinterlassen, Benutzer abmelden und/oder sperren sowie einsehen, welche Client-Computer verfügbar und welche gerade in Benutzung sind. Zusätzlich verfügt das System über eine öffentliche Weboberfläche, über die eingesehen werden kann, welche Kiosk-PCs verfügbar bzw. nicht verfügbar sind, und über die Reservierungen vorgenommen werden können.</p>
+
+<h4>1.1.2. Der Libki-Client</h4>
+<p>Der Libki-Client ist plattformübergreifend einsetzbar und läuft auf zahlreichen Betriebssystemen, darunter Microsoft Windows und Linux. Der Libki-Client zeigt einen Zähler an, der dem Benutzer mitteilt, wie viele Minuten noch verbleiben, und bietet die Möglichkeit, sich vorzeitig abzumelden. Ungenutzte Minuten können an jedem anderen Computer verwendet werden, auf dem der Libki-Client läuft. Der Libki-Client kann so eingestellt werden, dass er sich beim Abmelden vom Betriebssystem abmeldet oder den Computer sogar neu startet, sobald sich ein Benutzer vom Libki-Client abmeldet.</p>
+
+<h3 id="serverempfehlungen">1.2. Empfehlungen für den Libki-Server</h3>
+<p>Zum Zeitpunkt der Erstellung dieses Handbuchs wird empfohlen, den Libki-Server unter <a href="https://www.debian.org/">Debian Linux</a>, <a href="https://www.ubuntu.com/server">Ubuntu Server</a> oder mittels <a href="https://www.docker.com/">Docker</a> zu betreiben.</p>
+<p>Anleitungen zur Bereitstellung finden Sie im Abschnitt <a href="#installation">Installation</a>.</p>
+<p>Der Libki-Server ist für alle gängigen Webbrowser ausgelegt, wird jedoch hauptsächlich mit Chrome und Firefox getestet.</p>
+
+<h3 id="mitwirken">1.3. Beiträge leisten</h3>
+<p>Dieses Handbuch ist ein sich ständig weiterentwickelndes Dokument, und Änderungen daran sind jederzeit willkommen. Die maßgebliche Quelle für das Libki-Handbuch ist <a href="https://github.com/Libki/libki-manual">https://github.com/Libki/libki-manual</a>.</p>
+<p>Wenn Sie einen Vorschlag oder Beitrag für das Handbuch haben, folgen Sie bitte den Richtlinien zum Mitwirken am <a href="#handbuch">Handbuch</a>.</p>
+
+<h2 id="installation">2. Installation</h2>
+
+<h3 id="einstiegsinstallation">2.1. Automatische Installation in einem Schritt</h3>
+<p>Möchten Sie Libki so schnell wie möglich einrichten und verfügen über einen dedizierten Server? Dann ist dies die richtige Wahl für Sie. Stellen Sie einfach sicher, dass auf Ihrem Server Ubuntu 18.04, 20.04 oder Debian 11 (Bullseye) läuft und dass kein Benutzer namens „libki“ existiert.</p>
+<pre><code>wget -O- install.libki.org | bash</code></pre>
+<p>(Übrigens handelt es sich dabei um den Buchstaben O, nicht die Ziffer 0.)</p>
+
+<h3 id="alternative-methode">2.2. Alternative Methode</h3>
+<p>Nicht jeder möchte ein Skript direkt aus dem Web per Pipe in bash leiten. Das verhindert nämlich, dass Sie den Code lesen können, den Sie gleich auf Ihrem System ausführen. Wenn Sie ihn vorher durchsehen möchten, ist diese Alternative das Richtige für Sie:</p>
+<pre><code>git clone https://github.com/libki/libki-server.git
+cd libki-server
+bash install.sh</code></pre>
+
+<h3 id="docker">2.3. Docker</h3>
+<p>Das offizielle Libki-Server-Docker-Image muss mit einem Datenbankserver verbunden werden – es enthält selbst keine MySQL-Instanz. Es gilt als bewährte Praxis, einen MySQL- oder MariaDB-Container im selben Docker-Netzwerk zu verwenden.</p>
+<p>Das Libki-Server-Image ist auf <a href="https://hub.docker.com/r/libki/libki-server">Docker Hub</a> verfügbar.</p>
+<p>Dieser Container erfordert das Setzen einiger Umgebungsvariablen, damit er ordnungsgemäß funktioniert. Im Folgenden ein Beispiel für die benötigten Umgebungsvariablen:</p>
+<pre><code>LIBKI_INSTANCE=&lt;INSTANCE&gt; (1)
+LIBKI_DB_DSN=dbi:mysql:&lt;DB_NAME&gt;;host=&lt;DB_HOSTNAME&gt;;port=3306
+LIBKI_DB_USER=&lt;DB_USERNAME&gt;
+LIBKI_DB_PASSWORD=&lt;DB_PASSWORD&gt;
+LIBKI_DB_HOST=&lt;DB_HOSTNAME&gt;
+LIBKI_DB_PORT=3306
+LIBKI_DB_DATABASE=&lt;DB_NAME&gt;
+LIBKI_TZ=America/Denver (2)</code></pre>
+<table class="params">
+<tr><td><strong>1</strong></td><td>Instanzname; kann bei Einzelinstanz-Servern leer bleiben</td></tr>
+<tr><td><strong>2</strong></td><td>Ihre Zeitzone finden Sie in der Dokumentation <a href="https://metacpan.org/pod/DateTime::TimeZone::Catalog">hier</a>.</td></tr>
+</table>
+<p>Unter <code>docker/docker-compose.yml</code> wird eine Docker-Compose-Datei bereitgestellt, mit der sowohl der Libki-Server als auch ein MariaDB-Container gestartet werden. Umgebungsvariablen sollten unter <code>docker/.env</code> gespeichert werden.</p>
+
+<h4>2.3.1. Cronjobs</h4>
+<p>Die Libki-Cronjobs sind nicht so eingerichtet, dass sie innerhalb des Docker-Containers laufen. Stattdessen sollten die Cronjobs auf dem Host-Rechner eingerichtet werden.</p>
+<p>Fügen Sie Folgendes zur Crontab des root-Benutzers oder zu einer Datei in <code>/etc/cron.d/</code> hinzu.</p>
+<pre><code>* * * * * root docker exec &lt;container-name&gt; /app/script/cronjobs/libki.pl
+0 0 * * * root docker exec &lt;container-name&gt; /app/script/cronjobs/libki_nightly.pl</code></pre>
+
+<h3 id="tls-ssl">2.4. Libki-Server mit TLS/SSL verwenden</h3>
+<p>Der Libki-Server bietet keine native SSL-Unterstützung. Um SSL mit Libki zu nutzen, sollten Sie einen Reverse-Proxy mit SSL-Terminierung verwenden, wie z. B. Apache, nginx, Traefik usw. Standardmäßig verwendet Libki Apache als Proxy.</p>
+<p>Sobald SSL eingerichtet ist, muss der Proxy den benutzerdefinierten HTTP-Header <code>X-Request-Base</code> mit dem Wert Ihrer Server-URL unter Verwendung von SSL senden. Lautet Ihr FQDN beispielsweise <code>libki.mylib.org</code>, setzen Sie <code>X-Request-Base</code> auf <code>https://libki.mylib.org</code>.</p>
+
+<h2 id="konfiguration">3. Konfiguration</h2>
+
+<h3 id="einstellungen">3.1. Einstellungen</h3>
+
+<h4>3.1.1. Zeiteinstellungen</h4>
+
+<h5>Standardzeitkontingent pro Tag</h5>
+<p>Diese Einstellung legt die Gesamtzahl der Minuten fest, die einem Benutzer standardmäßig pro Tag zur Verfügung stehen.</p>
+<div class="note"><strong>Hinweis</strong>Der Wert von <strong>Standardzeitkontingent pro Tag</strong> sollte eine ganze Zahl sein.</div>
+
+<h5>Standardzeitkontingent pro Sitzung</h5>
+<p>Diese Einstellung legt die Gesamtzahl der Minuten fest, die einem Benutzer pro <em>Sitzung</em> und Tag zur Verfügung stehen. Ist ein System also mit 120 Minuten Zeitkontingent pro Tag und 30 Minuten Zeitkontingent pro Sitzung konfiguriert, kann sich ein Benutzer viermal täglich für jeweils 30 Minuten anmelden.</p>
+<div class="note"><strong>Hinweis</strong>Der Wert von <strong>Standardzeitkontingent pro Sitzung</strong> sollte eine ganze Zahl sein.</div>
+
+<h5>Standard-Gastzeitkontingent pro Tag</h5>
+<p>Entspricht dem <strong>Standardzeitkontingent pro Tag</strong>, gilt jedoch für Gastkonten anstelle regulärer Benutzer.</p>
+<div class="note"><strong>Hinweis</strong>Der Wert von <strong>Standardzeitkontingent pro Tag</strong> sollte eine ganze Zahl sein.</div>
+
+<h5>Standard-Gastzeitkontingent pro Sitzung</h5>
+<p>Entspricht dem <strong>Standardzeitkontingent pro Sitzung</strong>, gilt jedoch für Gastkonten anstelle regulärer Benutzer.</p>
+<div class="note"><strong>Hinweis</strong>Der Wert von <strong>Standard-Gastzeitkontingent pro Tag</strong> sollte eine ganze Zahl sein.</div>
+
+<h4>3.1.2. Automatische Zeitverlängerung</h4>
+<p>Libki verfügt über ein automatisches Zeitverlängerungssystem, das es Benutzern ermöglicht, über die vorab festgelegte Anzahl an Minuten pro Sitzung hinaus an einem Client-Computer angemeldet zu bleiben.</p>
+
+<h5>Verlängerungsdauer</h5>
+<p>Die Zeitspanne (in Minuten), um die die Sitzungszeit eines Benutzers automatisch verlängert wird.</p>
+<div class="note"><strong>Hinweis</strong>Der Wert von <strong>Verlängerungsdauer</strong> sollte eine ganze Zahl sein.</div>
+
+<h5>Zeit verlängern bei</h5>
+<p>Diese Einstellung steuert, zu welchem Zeitpunkt eine Verlängerung ausgelöst wird. Eine Sitzung wird verlängert, wenn die verbleibende Sitzungszeit des Benutzers unter diesen Wert (in Minuten) fällt.</p>
+<div class="note"><strong>Hinweis</strong>Der Wert von <strong>Zeit verlängern bei</strong> sollte eine ganze Zahl sein.</div>
+
+<h5>Zeit verlängern, außer wenn</h5>
+<p>Diese Einstellung legt fest, ob ein Benutzer für eine automatische Zeitverlängerung infrage kommt. Es gibt zwei Optionen:</p>
+<ul>
+<li><strong>Client des Benutzers ist reserviert</strong> – Diese Option begrenzt eine Zeitverlängerung so, dass sie sich nicht mit einer bestehenden Reservierung des Client-Computers des Benutzers überschneidet. Reservierungen für andere Clients werden nicht berücksichtigt. Der Reservierungsabstand wird dabei berücksichtigt.</li>
+<li><strong>Ein beliebiger Client ist reserviert</strong> – Diese Option verhindert eine Zeitverlängerung, wenn <strong>irgendein</strong> Client aktuell reserviert ist. Ist irgendein Client reserviert, findet keine Zeitverlängerung statt, selbst wenn der Client des Benutzers selbst nicht reserviert ist.</li>
+</ul>
+
+<h5>Beim Verlängern der Zeit</h5>
+<p>Diese Einstellung bestimmt, wie Minuten dem Konto eines Nutzers gutgeschrieben werden, wenn eine automatische Zeitverlängerung erfolgt. Es gibt zwei Optionen:</p>
+<ul>
+<li><strong>Minuten vom Tageskontingent abziehen</strong> – Diese Option verschiebt Minuten vom Tageskontingent des Benutzers in die Sitzungsminuten. Das bedeutet, der Benutzer kann den Client-Computer weiter nutzen, jedoch nur bis zu seinem täglichen Zeitkontingent.</li>
+<li><strong>Keine Minuten vom Tageskontingent abziehen</strong> – Diese Option fügt der Sitzung eines Benutzers Minuten „aus dem Nichts“ hinzu. Dadurch wird nicht beeinflusst, wie viele Sitzungen ein Benutzer pro Tag hat.</li>
+</ul>
+
+<h4>3.1.3. Client-Verhalten</h4>
+
+<h5>Client-Reservierungen</h5>
+<p>Diese Einstellung steuert, wie Clients von Benutzern genutzt werden können. Es gibt drei Möglichkeiten:</p>
+<ul>
+<li><strong>Wer zuerst kommt, mahlt zuerst.</strong> Erlaubt einem Benutzer, sich an jedem gerade nicht genutzten Client anzumelden.</li>
+<li><strong>Nur mit Reservierung.</strong> Erfordert, dass ein Benutzer eine Reservierung für einen Client vornimmt, bevor er sich anmeldet.</li>
+<li><strong>Wer zuerst kommt, mit Reservierungsoption.</strong> Ein hybrider Ansatz, der es Benutzern erlaubt, sich an jedem Client anzumelden, der weder genutzt noch reserviert ist.</li>
+</ul>
+<div class="note"><strong>Hinweis</strong>Die Einstellung „Benutzernamen anzeigen“ steuert, ob der Benutzername auf dem reservierten Client-Computer angezeigt wird.</div>
+
+<h5>Client-Inaktivität</h5>
+<p>Diese Einstellungen steuern die standardmäßige automatische Abmeldung aufgrund von Benutzerinaktivität.</p>
+<div class="note"><strong>Hinweis</strong>Diese Servereinstellungen können pro Client überschrieben werden. Weitere Details finden Sie unter <a href="#konfigurationsoptionen">Client-Konfiguration</a>.</div>
+
+<h6>Warnung bei Client-Inaktivität</h6>
+<p>Warnt den Benutzer, dass er nach dieser Anzahl an Minuten Inaktivität automatisch abgemeldet wird.</p>
+
+<h6>Abmeldung bei Client-Inaktivität</h6>
+<p>Meldet den Benutzer nach dieser Anzahl an Minuten Inaktivität automatisch ab.</p>
+
+<h6>Verzögerungsgrenze für Client-Registrierungsaktualisierung</h6>
+<p>Wenn ein Libki-Client gestartet wird, verbindet er sich regelmäßig mit dem Libki-Server, um sich selbst zu registrieren. Registriert sich ein Client nicht innerhalb dieser Anzahl an Minuten erneut, entfernt der Libki-Server ihn aus der Liste der aktiven Clients.</p>
+<div class="note"><strong>Hinweis</strong>Der Wert von <strong>Verzögerungsgrenze für Client-Registrierungsaktualisierung</strong> sollte eine ganze Zahl sein.</div>
+
+<h5>Client-Login-Banner</h5>
+<p>Die Client-Banner sind optionale Bereiche oben und unten auf dem Login-Bildschirm des Libki-Clients. Sie funktionieren ähnlich wie Webbrowser. Daher ist alles, was in einem Webbrowser angezeigt werden kann, auch in den Bannerbereichen anzeigbar (sofern die Größe es zulässt).</p>
+
+<h5>Quell-URL</h5>
+<p>Die URL für das Bild oder HTML, das Sie im Bannerbereich anzeigen möchten.</p>
+
+<h5>Breite</h5>
+<p>Wenn die <strong>Quell-URL</strong> ein Bild ist, kann eine bestimmte Breite erzwungen werden, anstatt die tatsächliche Bildbreite zu verwenden. Leer lassen, um die tatsächliche Bildbreite zu verwenden.</p>
+
+<h5>Höhe</h5>
+<p>Entspricht der Einstellung <strong>Breite</strong> für die <strong>Quell-URL</strong>, jedoch für die Höhe.</p>
+
+<h4>3.1.4. Client-Energieoptionen</h4>
+
+<h5>Einstellungen zum Ausschalten des Clients</h5>
+
+<h6>Ausschaltaktion</h6>
+<p>Legen Sie fest, ob die Schaltfläche „Ausschalten“ und die Funktion „automatisches Herunterfahren“ dazu führen, dass die Clients vollständig heruntergefahren oder in einen Ruhezustand versetzt werden.</p>
+<div class="note"><strong>Hinweis</strong>Beachten Sie, dass manche Konfigurationen die gleichzeitige Nutzung von Wake-on-LAN mit der Ausschalten-Option nicht zulassen. In diesem Fall muss der Ruhezustand gewählt werden.</div>
+
+<h6>Verzögerung des automatischen Herunterfahrens des Clients</h6>
+<p>Libki kann nach Schließzeit automatisch ein Ausschaltsignal an die Clients senden. Mit dieser Einstellung wird gesteuert, nach wie vielen Minuten nach Schließung dies geschieht. Leer lassen, um dies zu deaktivieren.</p>
+
+<h5>Einstellungen zum Einschalten des Clients</h5>
+<p>Libki verwendet Wake-on-LAN, um Clients einzuschalten. Die Geräte müssen Wake-on-LAN-fähig sein und dies muss aktiviert sein. Dies erfordert unter Umständen eine gewisse Konfiguration im Betriebssystem und/oder in den BIOS-Einstellungen des Geräts.</p>
+
+<h6>Signal senden über</h6>
+<p>Standardmäßig wird das Wake-on-LAN-Paket vom Server gesendet. Es ist möglich, die Konfiguration so einzurichten, dass ein laufender Libki-Client das Paket sendet, um die anderen Geräte aufzuwecken.</p>
+<div class="note"><strong>Hinweis</strong>Dies kann verwendet werden, um Geräte in einem anderen Netzwerk aufzuwecken, ohne von den Clients aus eine öffentliche Adresse ansprechen zu müssen.</div>
+
+<h6>Host</h6>
+<p>Diese Einstellung ist optional. Bleibt sie leer, wird die begrenzte Broadcast-Adresse (255.255.255.255) verwendet. Das sollte ausreichen, wenn sich der Server im selben lokalen Netzwerk wie die Clients befindet.</p>
+<p>Um einen anderen Knoten oder ein entferntes Netzwerk anzusprechen, geben Sie die IP-Adresse oder den vollqualifizierten Domainnamen (FQDN) an.</p>
+<div class="note"><strong>Hinweis</strong>Es ist möglich, Wake-on-LAN über das Internet zu nutzen, indem Anfragen entweder per Portweiterleitung auf Router-Ebene oder über einen auf einem dedizierten Gerät laufenden Weiterleitungsdienst an die lokale Broadcast-Adresse weitergeleitet werden.</div>
+
+<h6>Port</h6>
+<p>Die Portnummer für das Magic Packet. Diese Einstellung ist optional und verwendet standardmäßig den Discard-Dienst (9).</p>
+
+<h6>MAC-Adressen</h6>
+<p>Dies ist die Liste der physischen Adressen der Netzwerkadapter, die zum Aufwecken der Geräte verwendet werden.</p>
+<div class="note"><strong>Hinweis</strong>Das Format ist eine Adresse pro Zeile, wobei jede Adresse entweder keinen Trenner oder <strong>:</strong> verwendet.</div>
+
+<h6>Automatische Einschaltzeit</h6>
+<p>Libki kann automatisch ein Aufwecksignal an jedes Gerät senden, dessen MAC-Adresse in der Einstellung <strong>MAC-Adressen</strong> aufgeführt ist. Alle Geräte werden täglich zu dieser Zeit aufgeweckt. Leer lassen, um dies zu deaktivieren.</p>
+
+<h4>3.1.5. Benutzerdefiniertes JavaScript</h4>
+
+<h5>JavaScript für die Administrationsoberfläche</h5>
+<p>Fügen Sie in diesem Textfeld benutzerdefiniertes JavaScript für die Administrationsoberfläche hinzu.</p>
+
+<h5>JavaScript für die öffentliche Oberfläche</h5>
+<p>Fügen Sie in diesem Textfeld benutzerdefiniertes JavaScript für die öffentliche Oberfläche hinzu.</p>
+
+<h4>3.1.6. Datenaufbewahrung</h4>
+
+<h5>Anonymisierung des Verlaufs</h5>
+<p>Diese Einstellung steuert, wie lange Benutzer- und Client-Daten in nicht anonymisierter Form aufbewahrt werden. Bleibt diese Einstellung leer, werden die Daten unbegrenzt aufbewahrt.</p>
+<p>Bei der Anonymisierung erhält ein bestimmter Benutzer täglich eine neue zufällige ID. Auf diese Weise können Statistiken die Nutzung weiterhin pro Benutzer und Tag verfolgen, jedoch nicht mehr die Nutzung eines Benutzers über einen längeren Zeitraum hinweg.</p>
+<div class="note"><strong>Hinweis</strong>Der Wert von <strong>Anonymisierung des Verlaufs</strong> sollte eine ganze Zahl sein.</div>
+
+<h5>Aufbewahrung des Verlaufs</h5>
+<p>Diese Einstellung steuert, wie lange (in Tagen) Benutzer- und Client-Daten zum Zweck der Statistikerstellung und Überprüfung des Nutzungsverlaufs aufbewahrt werden. Bleibt diese Einstellung leer, werden die Daten unbegrenzt aufbewahrt.</p>
+<div class="note"><strong>Hinweis</strong>Der Wert von <strong>Aufbewahrung des Verlaufs</strong> sollte eine ganze Zahl sein.</div>
+
+<h5>Aufbewahrung inaktiver Benutzer</h5>
+<p>Diese Einstellung steuert, wie lange (in Tagen) ein Benutzer inaktiv sein kann, bevor er automatisch gelöscht wird. Bleibt diese Einstellung leer, werden alle Benutzer unbegrenzt aufbewahrt.</p>
+<div class="note"><strong>Hinweis</strong>Der Wert von <strong>Aufbewahrung inaktiver Benutzer</strong> sollte eine ganze Zahl sein.</div>
+<p>Diese Einstellung sollte bei Bedarf zur Einhaltung der <a href="https://www.eugdpr.org/">DSGVO</a> genutzt werden.</p>
+
+<h4>3.1.7. Gastausweise</h4>
+
+<h5>Selbstregistrierte Gastausweise</h5>
+<p>Diese Einstellung steuert, ob Clients über eine Schaltfläche „Als Gast anmelden“ verfügen, die bei der Anmeldung automatisch ein Gastkonto erstellt. Benutzer erhalten eine einmalige Nachricht auf dem Libki-Client mit ihrem Benutzernamen und Passwort, sodass sie ihre Sitzung sperren oder Druckfreigabedienste nutzen können.</p>
+<div class="note"><strong>Hinweis</strong>Der Libki-Client muss mindestens einmal neu gestartet werden, bevor diese Option erscheint.</div>
+
+<h5>Verbleibende Gastausweiszeit bei Abmeldung verfallen lassen</h5>
+<p>Ist dies aktiviert, wird jegliche verbleibende Zeit eines Gastkontos auf null gesetzt, nachdem sich dieses Konto von einem Client abgemeldet hat. Dies ist nützlich, um zu verhindern, dass unbefugte Personen verworfene Gastausweise aufnehmen und dadurch zusätzliche Zeit über die von der Bibliotheksrichtlinie erlaubte Zeit hinaus erhalten.</p>
+
+<h5>Präfix für Gastausweise</h5>
+<p>Die Zeichenfolge, mit der jeder Gastausweis-Benutzername beginnen soll. Bleibt sie leer, wird die Zeichenfolge „guest“ verwendet (z. B. guest1, guest2, guest3 usw.).</p>
+<div class="note"><strong>Hinweis</strong>Diese Einstellung kann ein Wort oder eine kurze Phrase sein, sollte aber nur Buchstaben und Zahlen enthalten. Vermeiden Sie Leerzeichen oder Sonderzeichen.</div>
+
+<h5>Zu erstellende Ausweise pro Stapel</h5>
+<p>Wird die Schaltfläche <em>Mehrere Gäste</em> verwendet, steuert diese Einstellung, wie viele Gastkonten pro Vorgang erzeugt werden.</p>
+<div class="note"><strong>Hinweis</strong>Der Wert von <strong>Zu erstellende Ausweise pro Stapel</strong> sollte eine ganze Zahl sein.</div>
+
+<h5>Bezeichnung Benutzername</h5>
+<p>Der Text in diesem Feld wird dem Gast-Benutzernamen vorangestellt (z. B. <em>„Benutzername:“</em>).</p>
+
+<h5>Bezeichnung Passwort</h5>
+<p>Diese Einstellung funktioniert wie <strong>Bezeichnung Benutzername</strong>, jedoch für das generierte Passwort statt für den Benutzernamen.</p>
+
+<h5>CSS für Gastausweise</h5>
+<p>Diese Einstellung ermöglicht es, die gestapelten Gastausweise mit CSS zu gestalten. Der Standardwert für diese Einstellung lautet:</p>
+<pre><code>body { /* default body style emulates a pre tag */
+    font-family: monospace;
+    white-space: pre;
+    display: block;
+    unicode-bidi: embed;
+}
+.guest-pass { /* each username and password is in a guest-pass span */
+    /* page-break-before: always; */ /* This will cause each pass to have a page break, good for use with receipt printers */
+}
+.guest-pass-username {} /* span containing the username label and the username itself */
+.guest-pass-username-label {} /* span containing the username label */
+.guest-pass-username-content {} /* span containing the username itself */
+.guest-pass-password {} /* span containing the password label and the password itself */
+.guest-pass-password-label {} /* span containing the password label */
+.guest-pass-password-content {} /* span containing the password itself */</code></pre>
+
+<h4>3.1.8. ILS-Integration</h4>
+
+<h5>Benutzer-Hyperlinks</h5>
+<p>Wenn Sie hier eine URL eintragen, wird der Benutzername in der Benutzertabelle der Web-Administration zu einem Hyperlink, der am Ende den Benutzernamen enthält. Zum Beispiel verweist <em><a href="http://catalog.koha.library/cgi-bin/koha/members/member.pl?quicksearch=1&searchmember=">http://catalog.koha.library/cgi-bin/koha/members/member.pl?quicksearch=1&amp;searchmember=</a></em> auf die Suchfunktion des Koha-ILS für den jeweiligen Benutzernamen.</p>
+
+<h5>SIP-Konfiguration</h5>
+<p>Single Sign-on mit einem ILS lässt sich über SIP2 realisieren. Einstellungen für den ILS-SIP2-Server können in der Datei <em>libki_local.conf</em> oder in der Einstellung <strong>SIP-Konfiguration</strong> gespeichert werden.</p>
+<p>Um die SIP-Authentifizierung zu aktivieren, müssen Sie Ihre libki_local.conf bearbeiten und einen Abschnitt wie folgt hinzufügen:</p>
+<pre><code>&lt;SIP&gt;
+    enable 1
+    host ils.mylibrary.org
+    port 6001
+    location LIB
+    username libki_sipuser
+    password PassW0rd
+    terminator CR
+    require_sip_auth 0
+    enable_split_messages 0
+    no_password_check 0 (1)
+    fee_limit 5.00 (2)
+    deny_on charge_privileges_denied (3)
+    deny_on recall_privileges_denied (4)
+    deny_on excessive_outstanding_fines (5)
+    deny_on_field AB:This is the reason we are denying you (6)
+    deny_on_field AF:Your library card has expired.:EXPIRE (7)
+    category_field PC (8)
+    birthdate_field PB (9)
+    pattern_personal_name , (10)
+    pattern_personal_name_reverse 1 (11)
+    ILS Koha (12)
+    skip_import_personal_name 0 (13)
+    hold_notification 0 (14)
+&lt;/SIP&gt;</code></pre>
+<table class="params">
+<tr><td><strong>1</strong></td><td>Wenn aktiviert, überprüft Libki das angegebene Passwort nicht gegen den SIP-Server; jedes Passwort funktioniert dann</td></tr>
+<tr><td><strong>2</strong></td><td>Kann entweder ein Gebührenbetrag oder ein SIP2-Feld sein, das die Gebührengrenze definiert (z. B. CC); zum Löschen der Gebührengrenze entfernen</td></tr>
+<tr><td><strong>3</strong></td><td>Sie können SIP2-Benutzerstatus-Flags festlegen, die Benutzern die Anmeldung verweigern</td></tr>
+<tr><td><strong>4</strong></td><td>Sie können so viele oder so wenige wie gewünscht festlegen. Entfernen Sie diese, wenn Sie keine Benutzer ablehnen möchten.</td></tr>
+<tr><td><strong>5</strong></td><td>Die vollständige Liste ist in der SIP2-Protokollspezifikation definiert</td></tr>
+<tr><td><strong>6</strong></td><td>Sie können verlangen, dass beliebige SIP-Felder den Wert Y haben müssen, damit sich Benutzer anmelden dürfen. Das Format der Einstellung ist <em>&lt;Feld&gt;:&lt;Nachricht&gt;</em>.</td></tr>
+<tr><td><strong>7</strong></td><td>Mit dem Format <em>&lt;Feld&gt;:&lt;Nachricht&gt;:&lt;Wert&gt;</em> wird die Anmeldung verweigert, wenn das Feld <em>&lt;Wert&gt;</em> enthält, und dem Benutzer wird <em>&lt;Nachricht&gt;</em> angezeigt.</td></tr>
+<tr><td><strong>8</strong></td><td>Geben Sie hier ein SIP-Tag an, das die Benutzerkategorie in der SIP-Benutzerabfrageantwort enthält</td></tr>
+<tr><td><strong>9</strong></td><td>Geben Sie hier ein SIP-Tag an, das das Geburtsdatum des Benutzers in der SIP-Benutzerabfrageantwort enthält; Standard ist „PB“. Manche ILS, wie Atriuum von Booksystems, verwenden „PD“.</td></tr>
+<tr><td><strong>10</strong></td><td>Geben Sie ein Muster zum Trennen von Nach- und Vornamen im Feld für den vollständigen Namen (AE) in der SIP-Antwort an</td></tr>
+<tr><td><strong>11</strong></td><td>Wenn Nachname und Vorname des Benutzers vertauscht sind, korrigiert diese Option die Reihenfolge</td></tr>
+<tr><td><strong>12</strong></td><td>Kann derzeit „Koha“ oder „Evergreen“ sein; steuert, wie wartende Vormerkungen zur Benachrichtigung von Benutzern berechnet werden</td></tr>
+<tr><td><strong>13</strong></td><td>Wenn gesetzt, werden Benutzernamen nicht in Libki importiert, sondern nur die Ausweis-/Benutzernummer</td></tr>
+<tr><td><strong>14</strong></td><td>Deaktiviert die Vormerkungsbenachrichtigung, wenn auf 0 gesetzt</td></tr>
+</table>
+<p>Eine äquivalente Konfiguration über YAML in den Systemeinstellungen würde wie folgt aussehen:</p>
+<pre><code>enable: 1
+host: ils.mylibrary.org
+port: 6001
+location: LIB
+username: libki_sipuser
+password: PassW0rd
+terminator: CR
+require_sip_auth: 0
+enable_split_messages: 0
+fee_limit: 5.00
+deny_on:
+  - charge_privileges_denied
+  - recall_privileges_denied
+  - excessive_outstanding_fines
+deny_on_field: "AB:This is the reason we are denying you"
+category_field: PC
+birthdate_field: PB
+pattern_personal_name: ","
+ILS: Koha
+skip_import_personal_name: 0
+hold_notification: 0</code></pre>
+<p>Der SIP-Abschnitt erfordert die folgenden Parameter:</p>
+<ul>
+<li><strong>enable</strong>: Auf 1 setzen, um SIP-Authentifizierung zu aktivieren, auf 0, um sie zu deaktivieren.</li>
+<li><strong>host</strong>: Die IP-Adresse oder der FQDN des SIP-Servers.</li>
+<li><strong>port</strong>: Der Port, auf dem der SIP-Server lauscht.</li>
+<li><strong>location</strong>: Der SIP-Standortcode, der zur SIP-Anmeldung passt.</li>
+<li><strong>username</strong>: Der Benutzername des SIP-Kontos, das für Transaktionen verwendet wird.</li>
+<li><strong>password</strong>: Das Passwort des SIP-Kontos, das für Transaktionen verwendet wird.</li>
+<li><strong>terminator</strong>: Je nach SIP-Server entweder CR oder CRLF. Standard ist CR.</li>
+<li><strong>require_sip_auth</strong>: Erfordert dieser SIP-Server eine Message-93-Anmeldung, bevor er verwendet werden kann? Falls ja, sollte dies auf 1 gesetzt und die Felder Benutzername/Passwort ausgefüllt werden. Für Koha sollte dies auf 1 gesetzt sein.</li>
+<li><strong>enable_split_message</strong>: Wenn dieser Server geteilte Nachrichten unterstützt, können Sie dies aktivieren. Für Koha sollte dies auf 0 gesetzt sein.</li>
+<li><strong>fee_limit</strong>: Wie erwähnt kann dies eine feste Zahl oder ein zu prüfendes SIP-Feld sein. Wird die Gebührengrenze überschritten, wird die Benutzeranmeldung verweigert.</li>
+<li><strong>deny_on</strong>: Kann wiederholt werden, um Anmeldungen basierend auf den in der SIP2-Protokollspezifikation beschriebenen Statusflags des Benutzers zu verweigern.</li>
+<li><strong>deny_on_field</strong>: Kann wiederholt werden, um Anmeldungen zu verweigern, wenn das angegebene Feld nicht den Wert „Y“ hat.</li>
+<li><strong>skip_import_personal_name</strong>: Wenn aktiviert, werden Vor- und Nachnamen der Benutzer nicht aus der Benutzerinformationsantwort übernommen und in der Datenbank gespeichert.</li>
+<li><strong>hold_notification</strong>: Wenn auf 0 gesetzt, werden Benachrichtigungen über Vormerkungen deaktiviert.</li>
+</ul>
+
+<h4>3.1.9. LDAP</h4>
+<p>Single Sign-on mit anderen Systemen lässt sich über LDAP realisieren. Einstellungen für den LDAP-Server werden derzeit ausschließlich in <em>libki_local.conf</em> gespeichert, eine Unterstützung über die Einstellungen wird jedoch in Kürze erwartet.</p>
+<div class="note"><strong>Hinweis</strong>Stellen Sie sicher, dass die URL bei Bedarf mit http:// oder https:// beginnt.</div>
+<pre><code>&lt;LDAP&gt;
+    enable 1
+    ldaps 0
+    host ldap://ldap.mylibrary.org
+    port 368
+    adminDn admin_dn
+    adminPwd admin_password
+    searchBase OU=...,DC=mylibrary,DC=org
+    match_attribute sAMAccountName
+&lt;/LDAP&gt;</code></pre>
+
+<h4>3.1.10. Zahlungen</h4>
+<p>Dieser Abschnitt verwaltet die Integration mit elektronischen Zahlungsdienstleistern.</p>
+
+<h5>Stripe-Zahlungen</h5>
+<p>Die Stripe-Integration erfordert ein <a href="https://stripe.com">Stripe.com</a>-Konto. Sie müssen 3 Werte aus dem Dashboard abrufen:</p>
+<ol>
+<li><strong>Stripe Publishable Key</strong>: zu finden unter Dashboard → Entwickler → API-Schlüssel</li>
+<li><strong>Stripe Secret Key</strong>: zu finden unter Dashboard → Entwickler → API-Schlüssel</li>
+<li><strong>Stripe Webhook Signing Secret</strong>: Erfordert das Hinzufügen eines „Event Destination“ im Stripe Workbench.
+  <ol>
+  <li>Gehen Sie zum Tab „Webhooks“</li>
+  <li>Klicken Sie oben rechts auf „Ziel hinzufügen“</li>
+  <li>Geben Sie die Endpunkt-URL ein: <strong>&lt;Ihre Libki-URL&gt;</strong>/api/v2/transactions/stripe/webhook</li>
+  <li>Vergeben Sie einen Namen und eine Beschreibung für das Ziel</li>
+  <li>Wählen Sie aus der Liste die Ereignisse <em>payment_intent.payment_failed</em> und <em>payment_intent.succeeded</em> aus.</li>
+  <li>Klicken Sie auf „Ziel speichern“</li>
+  </ol>
+</li>
+</ol>
+<p>Sie können Ihre Stripe-Integration im Sandbox-Modus testen, bevor Sie zu einem Live-Konto wechseln. Eine Liste von Test-Kreditkartennummern finden Sie unter <a href="https://docs.stripe.com/testing?testing-method=card-numbers#cards">https://docs.stripe.com/testing?testing-method=card-numbers#cards</a>.</p>
+
+<h4>3.1.11. Druckverwaltung</h4>
+
+<h5>Druckerkonfiguration</h5>
+<p>Details finden Sie im Hauptabschnitt zur Druckverwaltung.</p>
+
+<h5>Zeitüberschreitung für Druckaufträge in der Warteschlange</h5>
+<p>Die Zeitspanne, die ein Druckauftrag im Status „In Warteschlange“ verbleiben kann, bevor der Auftrag auf „Abgelaufen“ gesetzt und ein neuer, ausstehender Auftrag hinzugefügt wird. Dies dient dazu, Druckaufträge, die von einem nicht mehr reagierenden Print Manager übernommen wurden, automatisch erneut drucken zu lassen. Lassen Sie diese Einstellung leer, um die Funktion zu deaktivieren.</p>
+
+<h5>Administratoren erlauben, den Inhalt von Druckaufträgen der Benutzer einzusehen</h5>
+<p>Legt fest, ob Administratoren den Inhalt eines Druckauftrags eines Benutzers einsehen dürfen.</p>
+
+<h5>Gratisdruck</h5>
+<p>Diese Funktion ermöglicht es, einem Benutzer entweder kostenlose Druckseiten oder einen Dollar-„Rabatt“ auf Druckaufträge zu gewähren, der sich täglich, wöchentlich oder monatlich zurücksetzen kann. Dieses Gratiskontingent wird beim Freigeben eines Druckauftrags zuerst verwendet, ein verbleibendes Guthaben wird anschließend dem Benutzerkonto belastet. Bei ausreichender Größe kann das Gratisdruckkontingent für mehrere Druckaufträge genutzt werden.</p>
+<p>Standardwerte werden hier festgelegt und können sich zwischen regulären Benutzern und Gästen unterscheiden. Werte können auch individuell im Bearbeitungsbildschirm des Benutzers aktualisiert werden.</p>
+
+<h4>3.1.12. Reservierungen</h4>
+
+<h5>Zeitüberschreitung für Reservierungen</h5>
+<p>Die Zeitspanne in Minuten, die ein Benutzer hat, um sich an seinem reservierten Computer anzumelden. Meldet sich der Benutzer nicht innerhalb der festgelegten Frist an, wird der reservierte Client wieder verfügbar.</p>
+<div class="note"><strong>Hinweis</strong>Der Wert von <strong>Zeitüberschreitung für Reservierungen</strong> sollte eine ganze Zahl sein.</div>
+
+<h5>Automatische Stornierung von Reservierungen</h5>
+<p>Die Zeitspanne in Minuten vor einer bestehenden Reservierung eines Benutzers, innerhalb derer eine Anmeldung an EINEM BELIEBIGEN Client die Reservierung automatisch storniert.</p>
+<div class="note"><strong>Hinweis</strong>Der Wert von <strong>Automatische Stornierung von Reservierungen</strong> sollte eine ganze Zahl sein.</div>
+
+<h5>Erforderliche Mindestreservierungszeit</h5>
+<p>Die minimal zulässige Zeitspanne, für die eine Reservierung vorgenommen werden kann. Wird nichts angegeben, gilt standardmäßig 1 Minute.</p>
+
+<h5>Reservierungsabstand</h5>
+<p>Die Anzahl der Minuten zwischen Reservierungen, um Zeit für den physischen Wechsel einzuplanen. Standard ist 0 (kein Abstand).</p>
+
+<h5>Öffentliche Reservierungsseite anzeigen</h5>
+<p>Legt fest, ob die Liste der aktuellen Clients und ihres Reservierungsstatus auf der öffentlichen Libki-Seite angezeigt wird. Standardmäßig aktiviert.</p>
+
+<h5>Status der ersten Reservierung anzeigen innerhalb von</h5>
+<p>Zeitspanne, innerhalb derer Reservierungen auf der öffentlichen Seite angezeigt werden; Standard sind 60 Minuten ab jetzt.</p>
+
+<h5>Öffnungszeit für Reservierungen</h5>
+<p>Einheitliche Tageszeit, ab der PCs für Reservierungen verfügbar sind.</p>
+
+<h5>Benutzernamen anzeigen</h5>
+<p>Diese Einstellung legt fest, ob ein reservierter und wartender Libki-Client den Benutzernamen der Person anzeigt, auf die er wartet. Möglich sind:</p>
+<ul>
+<li>Benutzername</li>
+<li>Vor- und Nachname</li>
+<li>Anonym</li>
+<li>Deaktiviert</li>
+</ul>
+
+<h4>3.1.13. Nutzungsbedingungen</h4>
+<p>Diese Einstellung ermöglicht es einer Bibliothek, <em>Nutzungsbedingungen</em> für die Verwendung von Computern mit Libki-Client hinzuzufügen. Fügen Sie einfach den Text Ihrer Nutzungsbedingungen in das Textfeld ein, und diese werden jeder Person angezeigt, die sich an einem Libki-Client anmeldet. Wählt die Person <em>Ja</em>, wird die Anmeldung wie gewohnt fortgesetzt. Wählt die Person <em>Nein</em>, wird der Anmeldebildschirm zurückgesetzt.</p>
+
+<h4>3.1.14. Benutzereinstellungen</h4>
+
+<h5>Benutzerkategorien</h5>
+<p>Fügen Sie hier Ihre Liste der Benutzerkategorien als Liste in YAML-Syntax hinzu.</p>
+<p>Beispiel:</p>
+<pre><code>---
+- 'Kategorie 1'
+- 'Kategorie 2'
+- 'Kategorie 3'</code></pre>
+<p>Wurde Single Sign-on über SIP-Integration eingerichtet und die SIP-Konfiguration für <code>category_field</code> festgelegt, werden Werte aus dem SIP-Feld automatisch zu dieser Liste hinzugefügt, sobald sie erstmals über SIP auftauchen.</p>
+
+<h5>Vor- und Nachnamen anzeigen</h5>
+<p>Legt fest, ob die Namen der Benutzer angezeigt werden und ob diese Daten eingegeben werden können.</p>
+
+<h4>3.1.15. Erweiterte Einstellungen</h4>
+
+<h5>Erweiterte Regeln</h5>
+<p>In diesem Abschnitt können erweiterte Regeln eingerichtet werden, um eine Reihe von Verhaltensweisen anhand verschiedener Kriterien zu bestimmen.</p>
+<p>Zum Beispiel:</p>
+<pre><code>-
+  criteria:
+    user_category: MyCategory1
+    client_location: MyLocation1
+  rules:
+    session: 25
+    guest_session: 20
+-
+  criteria:
+    client_location: MyLocation1
+  rules:
+    session: 20
+    guest_session: 20
+-
+  criteria:
+    user_category: MyCategory1
+  rules:
+    session: 15
+    guest_session: 20
+-
+  rules:
+    session: 10
+    guest_session: 20</code></pre>
+<p>Regeln sollten vom Spezifischsten zum Allgemeinsten aufgelistet werden. Fehlt ein Kriterium in einer Regel, wird es beim Abgleich nicht berücksichtigt.</p>
+<p>Nehmen wir zum Beispiel an, wir versuchen, uns als Benutzer mit der Kategorie <code>MyCategory1</code> an einem Client mit dem Standort <code>MyLocation2</code> anzumelden.</p>
+<ul>
+<li>Die erste Regel stimmt bei der Kategorie überein, jedoch nicht beim Standort, und wird daher übersprungen.</li>
+<li>Die zweite Regel prüft nur den Standort, der nicht übereinstimmt, und wird daher übersprungen.</li>
+<li>Die dritte Regel prüft nur die Kategorie, die übereinstimmt, und wird daher verwendet!</li>
+<li>Die letzte Regel hat keine Kriterien, sie trifft also auf <strong>alles</strong> zu.</li>
+</ul>
+<p>Gibt es keine solche allgemeingültige Regel, greift Libki auf die Standard-Zeitkontingent-Einstellungen aus dem Abschnitt <code>Zeiteinstellungen</code> zurück.</p>
+
+<h6>Selbst wenn eine Regel eigentlich passen würde, wird sie übersprungen, wenn sie nicht die gesuchte „Unterregel“ enthält</h6>
+<p>Nehmen wir zum Beispiel Folgendes:</p>
+<pre><code>-
+  criteria:
+    client_location: MyLocation1
+  rules:
+    session: 15
+-
+  rules:
+    session: 10
+    guest_session: 20</code></pre>
+<p>Angenommen, ein Gast meldet sich an einem Client an einem Standort <code>MyLocation1</code> an.</p>
+<ul>
+<li>Die erste Regel wird übersprungen, weil guest_session in dieser Regel nicht definiert ist.</li>
+<li>Die zweite Regel wird verwendet, weil sie auf alles zutrifft und guest_session <strong>tatsächlich</strong> definiert.</li>
+</ul>
+
+<h6>Regeln können mehrere Werte für ein bestimmtes Kriterium angeben</h6>
+<p>Zum Beispiel:</p>
+<pre><code>-
+  criteria:
+    user_category:
+      - MyCategory1
+      - MyCategory2
+    client_location: MyLocationA
+  rules:
+    session: 25
+    daily: 50
+    guest_session: 20
+    guest_daily: 45</code></pre>
+<p>Das obige Beispiel würde für jeden Benutzer der Kategorie <code>MyCategory1</code> <strong>oder</strong> <code>MyCategory2</code> gelten, der sich an einem Client am Standort <code>MyLocationA</code> anmeldet.</p>
+<p>Das heißt, diese Regel gilt für alle Werte in der Liste dieses Kriteriums.</p>
+<p>Man kann es sich auch so vorstellen, dass alle Kriterien UND-verknüpft und alle Werte eines Kriteriums ODER-verknüpft sind.</p>
+<pre><code>-
+  criteria:
+    user_category:
+      - Cat1
+      - Cat2
+    client_location:
+      - LocA
+      - LocB
+  rules:
+    session: 25
+    daily: 50
+    guest_session: 20
+    guest_daily: 45</code></pre>
+<p>Das würde in SQL etwa so ausgedrückt: <code>SELECT rule WHERE ( user_category = Cat1 OR user_category = Cat2 ) AND ( client_location = LocA OR client_location = LocB )</code></p>
+
+<h6>Regeloptionen</h6>
+<p>Die Liste aller möglichen Kriterien umfasst:</p>
+<ul>
+<li><code>client_location</code></li>
+<li><code>client_name</code></li>
+<li><code>user_category</code></li>
+</ul>
+<p>Die Liste aller möglichen Regeln umfasst:</p>
+<ul>
+<li><code>session</code>: Die Anzahl der Minuten pro Sitzung, die einem registrierten Benutzer gewährt wird</li>
+<li><code>guest_session</code>: Die Anzahl der Minuten pro Sitzung, die einem Gastbenutzer gewährt wird</li>
+<li><code>daily</code>: Das tägliche Minutenkontingent, das einem registrierten Benutzer pro Tag zugewiesen wird</li>
+<li><code>guest_daily</code>: Das tägliche Minutenkontingent, das einem Gastbenutzer pro Tag zugewiesen wird</li>
+<li><code>no_reservation_required</code>: Erlaubt eine Anmeldung ohne Reservierung, selbst wenn „Client-Reservierungen“ auf „Nur mit Reservierung“ gesetzt ist. Der Wert sollte zum Aktivieren „1“ sein.</li>
+</ul>
+
+<h4>3.1.16. API-Schlüssel</h4>
+<p>API-Schlüssel werden benötigt, damit sich Libki Print Manager und Libki Print Station mit dem Libki-Server verbinden können. Auf dieser Seite können Sie neue Schlüssel erstellen und bestehende löschen.</p>
+<p>Schlüssel besitzen eine für Menschen lesbare Notiz (zur Angabe ihres Zwecks) und einen Typ (PrintManager oder PrintStation). Der Schlüsselwert selbst ist eine UUID.</p>
+
+<h3 id="schliesszeiten">3.2. Schließzeiten</h3>
+<p>Schließzeiten sind eine Möglichkeit, zu verhindern, dass Benutzer eine Sitzung beginnen, die durch die Schließung des Standorts, an dem sie sich befinden, vorzeitig beendet wird. Schließzeiten können standortübergreifend oder pro Standort festgelegt werden. Ist für einen bestimmten Standort keine Schließzeit festgelegt, verwendet dieser Standort die Schließzeiten von <em>Alle Standorte</em>.</p>
+
+<h3 id="druckverwaltung-2">3.3. Druckverwaltung</h3>
+<p>Die Druckverwaltung in Libki kann über zwei verschiedene Backends erfolgen: Libki Print Manager oder CUPS.</p>
+
+<h4>3.3.1. Server mit Libki Print Manager konfigurieren</h4>
+<p>Installieren und konfigurieren Sie Libki Print Manager auf einem Computer, der direkt an Ihre physischen Drucker drucken kann.</p>
+
+<h5>Konfiguration der Druckverwaltung einrichten</h5>
+<p>Nachfolgend ein Beispiel mit 6 virtuellen Druckern, jeweils einer für Schwarzweiß- und Farbvarianten von Simplex, langem Duplex und kurzem Duplex.</p>
+<pre><code>---
+public_print_release: enabled
+printers:
+  color:
+    chroming: color
+    physical_printer_name: somePrinter
+    public_printer_name: Color
+    plexing: simplex
+    type: PrintManager
+    cost_per_page: .10
+  color-duplex-long:
+    chroming: color
+    physical_printer_name: somePrinter
+    public_printer_name: Color (Duplex/Long)
+    plexing: duplexlong
+    type: PrintManager
+    cost_per_page: .10
+  color-duplex-short:
+    chroming: color
+    physical_printer_name: somePrinter
+    public_printer_name: Color (Duplex/Short)
+    plexing: duplexshort
+    type: PrintManager
+    cost_per_page: .10
+  monochrome:
+    chroming: monochrome
+    physical_printer_name: somePrinter
+    public_printer_name: Monochrome
+    plexing: simplex
+    type: PrintManager
+    cost_per_page: .05
+    auto_release: yes
+  monochrome-duplex-long:
+    chroming: monochrome
+    physical_printer_name: somePrinter
+    public_printer_name: Monochrome (Duplex/Long)
+    plexing: duplexlong
+    type: PrintManager
+    cost_per_page: .05
+    auto_release: client
+  monochrome-duplex-short:
+    chroming: monochrome
+    public_printer_name: Monochrome (Duplex/Short)
+    plexing: duplexshort
+    type: PrintManager
+    cost_per_page: .05
+    auto_release: public</code></pre>
+
+<h6>Druckerparameter</h6>
+<ul>
+<li><strong>chroming</strong>: Erforderlich, Werte sind <code>color</code> oder <code>monochrome</code>.</li>
+<li><strong>physical_printer_name</strong>: Erforderlich, muss exakt dem Namen des zu verwendenden Windows-Druckers entsprechen.</li>
+<li><strong>public_printer_name</strong>: Erforderlich, so wird der Drucker bei der Druckfreigabe angezeigt.</li>
+<li><strong>plexing</strong>: Erforderlich, Werte sind „simplex“, „duplexlong“ oder „duplexshort“.</li>
+<li><strong>type</strong>: Erforderlich, aktuelle Optionen sind „PrintManager“ oder „cups“.</li>
+<li><strong>auto_release</strong>: Optional
+  <ul>
+  <li>bei „yes“ werden Druckaufträge an diesen Drucker nicht zur Freigabe zurückgehalten, sondern automatisch freigegeben, sofern Guthaben verfügbar ist.</li>
+  <li>bei „client“ werden Druckaufträge nur automatisch freigegeben, wenn sie von Libki-Clients stammen (zur Freigabe per Web-Upload zurückgehalten)</li>
+  <li>bei „public“ werden Druckaufträge nur automatisch freigegeben, wenn sie ins Web hochgeladen wurden (zur Freigabe von Libki-Clients zurückgehalten)</li>
+  </ul>
+</li>
+<li><strong>cost_per_page</strong>: der Dezimalwert pro Seite für diesen Drucker</li>
+</ul>
+
+<h6>Weitere Parameter</h6>
+<ul>
+<li><strong>public_print_release</strong>: Übergeordneter Parameter. Bei „disabled“ können Benutzer ihre eigenen Druckaufträge nicht freigeben, nur Bibliothekspersonal kann dies tun.</li>
+</ul>
+
+<h4>3.3.2. Server mit CUPS konfigurieren</h4>
+<p>Um die Druckverwaltung mit CUPS einzurichten, benötigen Sie den Namen des CUPS-Servers (oder dessen IP-Adresse), den Benutzernamen zur Verbindung mit diesem Server sowie den Namen des einzurichtenden Druckers.</p>
+
+<h5>Konfiguration der Druckverwaltung einrichten</h5>
+<p>Sie können die folgende Konfiguration als Vorlage verwenden; ersetzen Sie einfach die Werte der Felder <code>server</code> und <code>username</code> durch Ihre eigenen.</p>
+<pre><code>cups:
+      server: localhost
+      username: print
+
+printers:
+  PDF:
+    type: cups
+    name: PDF</code></pre>
+
+<h4>3.3.3. Clients konfigurieren</h4>
+<p>Nachdem Sie Ihren Server für die Druckverwaltung eingerichtet haben, müssen Sie auch Ihre Clients konfigurieren. Dazu müssen Sie die Datei <code>Libki Kiosk Management System.ini</code> bearbeiten. Unter Windows befindet sich diese Datei meist unter <code>C:\ProgramData\Libki</code>, kann sich jedoch je nach Ihrer spezifischen Betriebssystemkonfiguration auch an anderer Stelle befinden. Höchstwahrscheinlich müssen Sie diese Datei als Administrator bearbeiten.</p>
+<p>Sobald Sie die Datei gefunden haben, müssen Sie am Ende einen neuen Konfigurationsblock hinzufügen.</p>
+<pre><code>[printers]
+color="C:\\printers\\color"
+monochrome="C:\\printers\\monochrome"</code></pre>
+<p>Wie Sie sehen, entsprechen die Drucker den <code>name:</code>-Feldern, die in der Druckverwaltungskonfiguration des Servers definiert wurden. Sie müssen außerdem sicherstellen, dass diese Verzeichnisse auf dem Client-Computer existieren. Sobald der Libki-Client gestartet wurde, überwacht er diese Verzeichnisse auf PDF-Dateien. Sieht der Client eine Datei, lädt er sie mit dem passenden Druckernamen auf den Server hoch.</p>
+<p>Libki ermittelt die gewünschte Anzahl der Kopien für einen Druckauftrag anhand des Dateinamens der gespeicherten PDF-Datei. Endet dieser auf das Muster {Zahl}_{Zahl}.pdf, wird die erste Zahl als Kopienparameter interpretiert.</p>
+<p>Sie können einen beliebigen PDF-Druckertreiber verwenden, um PDF-Dateien in diese Verzeichnisse zu drucken. Zwei brauchbare, getestete Optionen sind:</p>
+<ul>
+<li><a href="https://github.com/Libki/PdfScribe">PDFScribe</a></li>
+<li><a href="https://github.com/clawsoftware/clawPDF">ClawPDF</a></li>
+</ul>
+<div class="note"><strong>Automatische Konfiguration</strong>Seit Libki 26.02 kann die Druckerkonfiguration über den Installationsassistenten des Clients vorgenommen werden. Dies setzt voraus, dass ClawPDF als Druckertreiber verwendet wird; dieser muss zuvor installiert werden. Wenn der Installationsassistent des Clients danach fragt, geben Sie die Druckernamen ein, die Sie für den Client aktivieren möchten, eine pro Zeile, wobei die erste Zeile den Standarddrucker darstellt. Der Assistent übernimmt das Anlegen der Druckerverzeichnisse, das Aktualisieren der Client-.ini-Datei und die Konfiguration von ClawPDF.</div>
+
+<h2 id="administration">4. Administration</h2>
+
+<h3 id="statistik-verlauf">4.1. Statistik &amp; Verlauf</h3>
+
+<h2 id="desktop-client">5. Desktop-Client</h2>
+
+<h3 id="windows">5.1. Windows</h3>
+
+<h4>5.1.1. Download</h4>
+<p>Der Windows-Installationsassistent für den Libki-Client kann unter <a href="https://github.com/Libki/libki-client/releases">https://github.com/Libki/libki-client/releases</a> heruntergeladen werden.</p>
+<p>Stellen Sie sicher, dass Sie die Client-Version herunterladen, die zu Ihrer Libki-Serverversion passt.</p>
+
+<h4>5.1.2. Installationsassistent</h4>
+<p>Nachdem Sie den Client heruntergeladen haben, führen Sie ihn aus, und es wird Ihnen der Installationsassistent angezeigt. Hier werden Ihnen mehrere Fragen dazu gestellt, wie Ihr Client konfiguriert werden soll.</p>
+
+<h5>Schema</h5>
+<p>Setzen Sie dieses Feld auf <code>https</code>, wenn Sie Ihren Libki-Server hinter einem SSL-fähigen Proxy eingerichtet haben, andernfalls auf <code>http</code>.</p>
+
+<h5>Host</h5>
+<p>Setzen Sie hier die IP-Adresse oder den FQDN Ihres Libki-Servers.</p>
+
+<h5>Port</h5>
+<p>Setzen Sie dieses Feld auf den externen Port, auf dem Ihr Libki-Server lauscht (80 für http, 443 für https).</p>
+
+<h5>Standort</h5>
+<p>Setzen Sie dieses Feld auf den Standort, den Sie diesem Client zuweisen möchten. Dies ist ein beliebiges Textfeld. Wenn Sie mehreren Clients denselben Standort zuweisen, achten Sie darauf, für alle Clients exakt dieselbe Schreibweise zu verwenden.</p>
+<p>Sie können den Standort beispielsweise auf <code>Hauptgeschoss</code> oder <code>Kinderraum</code> setzen.</p>
+
+<h5>Nur für diesen Benutzer ausführen</h5>
+<p>Wenn Sie hier einen Windows-Kontonamen eingeben, startet der Libki-Client nur, wenn dieser Windows-Benutzer angemeldet ist.</p>
+
+<h5>Für alle Benutzer außer diesem ausführen</h5>
+<p>Dies ist das Gegenteil von „Nur für diesen Benutzer ausführen“. Geben Sie hier einen Windows-Kontonamen an, läuft der Client für diesen Benutzer nicht, für alle anderen jedoch schon.</p>
+
+<h5>Client-Name</h5>
+<p>Hier können Sie diesen Client-Knoten benennen; jeder Client sollte einen eindeutigen Namen haben, da es sonst zu unerwartetem Verhalten kommt.</p>
+<p>Lassen Sie dieses Feld leer, verwendet Libki den Hostnamen des Client-Computers als Namen des Libki-Clients.</p>
+<p>Setzen Sie den Wert dieses Feldes auf <code>OS_USERNAME</code>, wird der angemeldete Windows-Kontoname als Name des Clients verwendet.</p>
+
+<h5>Aktion beim Abmelden</h5>
+<p>In diesem Abschnitt können Sie festlegen, was geschieht, wenn sich der Libki-Client abmeldet – entweder weil die Zeit des Benutzers abgelaufen ist oder weil sich der Benutzer vorzeitig abmeldet.</p>
+
+<h6>Neustart</h6>
+<p>Diese Option löst einen vollständigen Neustart des Client-PCs aus. Dies ist nützlich in Kombination mit Software wie <a href="http://www.faronics.com/products/deep-freeze/enterprise">Deep Freeze</a> oder <a href="https://horizondatasys.com/reboot-restore-rx-freeware/">Reboot Restore Rx</a>, die den Zustand eines Computers bei jedem Neustart zurücksetzt.</p>
+
+<h6>Vom Betriebssystem abmelden</h6>
+<p>Diese Option löst eine Abmeldung des Windows-Kontos aus, unter dem der Client aktuell angemeldet ist. Dies ist nützlich in Kombination mit der Software <a href="http://www.fortresgrand.com/products/cls/cls.htm">Clean Slate</a>, die den Zustand eines Computers bei jeder Abmeldung des Windows-Kontos zurücksetzt.</p>
+
+<h6>Nichts</h6>
+<p>Diese Option belässt das Host-Betriebssystem im aktuellen Zustand und zeigt lediglich den Anmeldebildschirm erneut an. Diese Option wird für den produktiven Einsatz nicht empfohlen. Alle Anwendungen, die der Benutzer zum Zeitpunkt der Abmeldung des Clients geöffnet hatte, bleiben geöffnet. Diese Option ist für Tests und Fehlersuche nützlich.</p>
+
+<h5>Passwort zum Deaktivieren des Clients</h5>
+<p>Hier können Sie ein „Hintertür“-Passwort eingeben. Wird dieses Passwort jederzeit mit leerem Benutzernamen in den Libki-Anmeldebildschirm eingegeben, führt dies zum Schließen des Libki-Clients. Dies ist nützlich, falls ein Client die Verbindung zum Server verliert und Anmeldungen nicht überprüfen kann.</p>
+
+<h5>Installationsort</h5>
+<p>Dies ist der Pfad, unter dem der Libki-Client installiert wird. Es wird empfohlen, den Standard-Installationspfad zu verwenden, sofern kein besonderer Grund dagegenspricht.</p>
+<div class="note"><strong>Lösungen für langsames Laden des Libki-Clients</strong>Auf manchen Computern startet der Libki-Client möglicherweise nicht, bevor ein Benutzer eine Anwendung öffnen konnte, die sich dann über den Libki-Anmeldebildschirm legt und es dem Benutzer ermöglicht, dieses Programm ohne Zeitbeschränkung zu nutzen. Windows 10 verfügt über eine Funktion, bei der Autostart-Programme <strong>absichtlich</strong> verzögert werden, basierend auf der Annahme von Microsoft, dass alle Benutzer möchten, dass Windows zuerst lädt. Diese Funktion führt zu einer Verzögerung beim Laden von Libki und gibt dem Benutzer damit die Gelegenheit, dies zu umgehen. Diese Funktion lässt sich mit einer einfachen Registrierungsänderung deaktivieren.<br>Pfad: HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Serialize<br>Name: StartupDelayInMSec<br>Daten: 0<br>Typ: dword<br>Details: <a href="https://thegeekpage.com/startupdelayinmsec/">https://thegeekpage.com/startupdelayinmsec/</a></div>
+
+<h3 id="linux">5.2. Linux</h3>
+<p>Um den Libki-Client unter Linux zu nutzen, müssen Sie ihn aus dem Quellcode kompilieren. Diese Anleitung wurde mit Blick auf Debian-basierte Distributionen verfasst (wie Debian, Ubuntu, Linux Mint oder Elementary OS).</p>
+
+<h4>5.2.1. Kompilierung</h4>
+<p>Erforderliche Pakete installieren:</p>
+<pre><code>sudo apt-get install git build-essential qtcreator qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools qttools5-dev-tools libqt5webkit5-dev libqt5script5 qtscript5-dev</code></pre>
+<p>Laden Sie eine Kopie des Libki-Client-Quellcodes herunter.</p>
+<pre><code>git clone https://github.com/libki/libki-client.git</code></pre>
+<ul>
+<li>Öffnen Sie Qt Creator und wählen Sie im Dateimenü <strong>Datei oder Projekt öffnen</strong>.</li>
+<li>Wählen Sie die Datei <strong>Libki.pro</strong> im soeben heruntergeladenen Quellordner aus.</li>
+<li>Klicken Sie auf <strong>Projekt konfigurieren</strong> und wählen Sie anschließend im Build-Menü <strong>Projekt Libki erstellen</strong>.</li>
+</ul>
+
+<h4>5.2.2. Installation</h4>
+<p>Kopieren Sie den kompilierten Client aus dem erstellten Debug-Ordner. Dieser befindet sich im selben Verzeichnis wie der Quellordner libki-client. FIXME: korrekten Ordnernamen nachschlagen!</p>
+<pre><code>sudo cp libkiclient /usr/local/bin</code></pre>
+<p>Machen Sie ihn ausführbar, falls dies aus irgendeinem Grund nicht schon der Fall ist.</p>
+<pre><code>sudo chmod +x /usr/local/bin/libkiclient</code></pre>
+<p>Kopieren Sie die Konfigurationsdatei und passen Sie sie nach Belieben an. Weitere Informationen finden Sie unten unter Konfigurationsoptionen.</p>
+<pre><code>nano ~/.config/Libki.ini</code></pre>
+<p>Wird der Client auf einem anderen Rechner installiert als dem, auf dem er kompiliert wurde, werden nur einige der Abhängigkeiten benötigt.</p>
+<pre><code>sudo apt-get install libqt5webkit5 libqt5script5</code></pre>
+
+<h4>5.2.3. Konfiguration</h4>
+
+<h5>Linux Mint mit Cinnamon</h5>
+<p><a href="https://github.com/Libki/libki-client/issues/39#issuecomment-562189590">Beigetragen</a> von <a href="https://github.com/loidor">Loidor</a></p>
+
+<h6>Umgehungsschutz</h6>
+<p>Ich lasse libkiclient ohne Verzögerung über Autostart-Anwendungen laufen, wodurch es schnell genug startet. Anschließend lasse ich ein Skript namens demapper mit 2 Sekunden Verzögerung laufen, da es mit kürzerer Verzögerung nicht zuverlässig funktioniert. Dieses deaktiviert Alt und Super, sodass es unmöglich ist, den Arbeitsbereich zu wechseln, das Startmenü zu öffnen oder die Ausführen-Konsole zu öffnen.</p>
+<p>Code für demapper:</p>
+<pre><code>#!/bin/bash
+
+xmodmap -e 'keycode 133='
+xmodmap -e 'keycode 64='</code></pre>
+<p>Weitere Umgehungsschutzmaßnahmen:</p>
+<ul>
+<li>Den Ein-/Ausschaltknopf deaktivieren</li>
+<li>Das Popup für Wechselmedien deaktivieren (Nemo → Einstellungen → Verhalten)</li>
+<li>Die Benutzer-Shell durch rbash ersetzen: <code>chsh -s /bin/rbash BENUTZERNAME</code></li>
+</ul>
+<p>Ich bin bislang niemandem begegnet, der sich gut genug mit dem Terminal auskennt, aber sobald das passiert, werde ich mir überlegen, wie man kill, killall und pkill deaktiviert.</p>
+
+<h6>Automatische Anmeldung, Sicherung, Wiederherstellung</h6>
+<p>Ich habe den Bildschirmschoner deaktiviert, da ich nicht möchte, dass der Client gesperrt wird, und in /etc/lightdm/lightdm.conf eine automatische Anmeldung eingerichtet.</p>
+<p>Zusätzlich habe ich eine Sicherungs-/Wiederherstellungslösung, bei der die Sicherung /home/BENUTZERNAME nach /opt/BENUTZERNAME kopiert. Die Wiederherstellung löscht /home/BENUTZERNAME und ersetzt es durch /opt/BENUTZERNAME. Nur root kann die Sicherung bei Bedarf ausführen (nach Änderungen), und die Wiederherstellung wird über lightdm.conf bei jeder Abmeldung ausgeführt.</p>
+<p>Sicherungscode:</p>
+<pre><code>#!/bin/bash
+
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root"
+   exit 1
+fi
+
+rm -rf /opt/public
+cp -a /home/public /opt/public
+echo "Backup klar."</code></pre>
+<p>Wiederherstellungscode:</p>
+<pre><code>#!/bin/bash
+
+rsync -qrpog --delete --exclude '.X*' /opt/public /home/
+echo "" > /home/public/.local/share/recently-used.xbel
+rm /var/spool/cups/*</code></pre>
+<p>Meine lightdm.conf:</p>
+<pre><code>[Seat:*]
+autologin-guest=false
+autologin-user=public
+autologin-user-timeout=5
+
+session-cleanup-script=/usr/local/bin/restore</code></pre>
+<p>Weitere Dinge:</p>
+<ul>
+<li>Ich installiere Google Chrome, da so gut wie jeder damit vertraut ist, unabhängig davon, welches System sonst genutzt wird. Das Passwort für den Schlüsselbund wird auf leer/unverschlüsselt gesetzt.</li>
+<li>Ich stelle LibreOffice Writer so ein, dass standardmäßig als docx gespeichert wird.</li>
+<li>Ich füge Verknüpfungen zu Chrome und Writer auf dem Desktop hinzu.</li>
+<li>Ich entferne das Terminal aus der Schnellstartleiste, da die meisten Benutzer nicht wissen, was das ist.</li>
+<li>Ich entferne die Optionen „Abmelden“ und „Herunterfahren“ aus dem Startmenü. (Das ist von Hand ziemlich mühsam, aber so geht's:</li>
+</ul>
+<p>Suchen Sie in <code>/usr/share/cinnamon/applets/menu@cinnamon.org/applet.js</code> die Zeile <code>//Lock screen</code>. Beginnen Sie dort einen mehrzeiligen Kommentar mit <code>/*</code> und gehen Sie zur Zeile <code>//Shutdown button</code>. Ungefähr in der Nähe, etwa 15 Zeilen weiter, sollte eine Zeile stehen, die <code>this.systemButtonsBox.add(button.aactor, { y_align: St.Align.END, y_fill: false });</code> lautet. Beenden Sie Ihren mehrzeiligen Kommentar nach dieser Zeile mit <code>*/</code>.</p>
+<p>Abschließend stelle ich meine bevorzugte Lautstärke ein und entferne das Lautstärkesymbol aus der Symbolleiste. Alle unsere Clients haben Kopfhörer, und diese können bei zu hoher Lautstärke recht stark durchdringen.</p>
+
+<h3 id="konfigurationsoptionen">5.3. Konfigurationsoptionen</h3>
+<p>Der Libki-Client lässt sich mit Optionen in der Konfigurations-INI-Datei weiter anpassen, die im Installationsassistenten nicht angezeigt werden.</p>
+
+<h4>5.3.1. Beschriftungen</h4>
+<p>Um die Beschriftungen auf dem Libki-Anmeldebildschirm zu ändern, können Sie einen <code>[label]</code>-Block festlegen. Gültige Optionen sind:</p>
+<ul>
+<li>username (Benutzername)</li>
+<li>password (Passwort)</li>
+<li>waiting_holds (wartende Vormerkungen)</li>
+<li>vom Server empfangene Fehlercodes</li>
+</ul>
+<p>Sie müssen nur für die Beschriftungen, die Sie ändern möchten, Zeilen zum <code>[label]</code>-Block hinzufügen. Alle nicht neu definierten Beschriftungen verwenden das Standardwort bzw. die Standardwörter der jeweils genutzten Sprache.</p>
+<pre><code>[labels]
+username="Username:"                        ; What text it will say at the username input field
+password="Password:"                        ; What text it will say at the password input field
+waiting_holds="You have holds waiting."     ; This can be used if your client connects to your library's ILS via SIP2.
+INVALID_USER="Login Failed: Username and password do not match" ; What text to show on the login screen when this
+                                            ; error code is received from the server (any error code can be used)</code></pre>
+
+<h5>Übersetzung der Beschriftungen</h5>
+<p>Um sprachspezifisch benutzerdefinierten Text zuzuweisen, können Sie für jede spezifische unterstützte Sprache einen eigenen <code>[label]</code>-Block definieren. Die Syntax für den neuen Block lautet <code>[labels-&lt;lang&gt;]</code>, wobei &lt;lang&gt; der Sprachcode mit oder ohne Länderkennung ist. Beispiel: <code>[labels-en]</code> oder <code>[labels-fr_CA]</code>.</p>
+<pre><code>[labels-fr_CA]
+username="Username:"                        ; What text it will say at the username input field
+password="Password:"                        ; What text it will say at the password input field</code></pre>
+<p>Beschriftungen in <code>[label]</code> werden als Standardwerte verwendet, wenn im Sprachblock keine Beschriftung definiert ist oder der Block selbst nicht existiert.</p>
+
+<h4>5.3.2. Anmeldung ohne Passwort</h4>
+<p>Wenn Sie Single Sign-on über SIP verwenden und Ihr SIP-Server so eingestellt ist, dass jedes vom Benutzer angegebene Passwort als gültig markiert wird, können Sie den Libki-Client in den passwortlosen Modus versetzen.</p>
+<p>Fügen Sie dazu einfach den Schlüssel <code>no_passwords</code> unter dem Abschnitt <code>[node]</code> wie folgt hinzu oder ändern Sie ihn:</p>
+<pre><code>no_passwords=1 ; Lets you hide the password field if passwords are not used.</code></pre>
+
+<h4>5.3.3. Nutzung des Clients nach Alter einschränken</h4>
+<p>Es ist möglich festzulegen, dass ein bestimmter Libki-Client nur von Personen einer bestimmten Altersgruppe genutzt werden kann. Um diese Funktion zu nutzen, fügen Sie im Abschnitt <code>[node]</code> der Libki-Client-INI-Datei einen neuen Schlüssel namens <code>age_limit</code> hinzu. Diese Funktion funktioniert nur bei Single Sign-on über SIP, wobei der SIP-Server ein Feld <code>PB</code> im Datumsformat <code>JJJJMMTT</code> zurückgibt, welches das Geburtsdatum des Benutzers darstellt.</p>
+<p>Beispiel:</p>
+<pre><code>[node]
+age_limit="gt18"</code></pre>
+<p>Dies beschränkt den Client auf Benutzer über 18 Jahren. Derzeit funktioniert dies nur über SIP2, da es momentan keine Möglichkeit gibt, das Alter eines Benutzers über die Verwaltungsoberfläche zu bearbeiten.</p>
+<p>Es können mehrere, durch Kommata getrennte Altersgrenzen angegeben werden, z. B. <code>age_limit="ge11,le17"</code>, wodurch der Client auf Benutzer zwischen (einschließlich) 11 und 17 Jahren beschränkt wird.</p>
+<p>Die ersten beiden Zeichen des Formats geben den Vergleich an. Unterstützte Vergleiche sind:</p>
+<ul>
+<li><code>eq</code>: gleich</li>
+<li><code>ne</code>: ungleich</li>
+<li><code>lt</code>: kleiner als</li>
+<li><code>gt</code>: größer als</li>
+<li><code>le</code>: kleiner oder gleich</li>
+<li><code>ge</code>: größer oder gleich</li>
+</ul>
+<p>Es ist möglich, einen Client für niemanden nutzbar zu machen (z. B. „gt18,lt17“), gehen Sie daher mit dieser Konfiguration vorsichtig um.</p>
+
+<h4>5.3.4. Automatische Abmeldung wegen Inaktivität</h4>
+<p>Es ist möglich, den Libki-Client so zu konfigurieren, dass er einen Benutzer abmeldet, wenn über eine bestimmte Anzahl an Minuten keine Mausbewegung erkannt wurde. Zusätzlich kann der Benutzer nach einer anderen Anzahl von Minuten zunächst gewarnt werden. Beide Konfigurationen existieren als Systemeinstellungen auf dem Libki-Server.</p>
+<p>Es ist ebenfalls möglich, diese Konfigurationen pro Client in der Libki-Client-INI-Datei anzugeben. Existieren diese Einstellungen in der Client-INI-Datei, überschreiben sie die Servereinstellungen. Auf diese Weise können die Servereinstellungen als Standard dienen, wobei einzelne Clients diese Servereinstellungen überschreiben können.</p>
+<p>Beispiel:</p>
+<pre><code>[node]
+inactivityLogout=5
+inactivityWarning=3</code></pre>
+<p>Im obigen Beispiel zeigt Libki nach 3 Minuten ohne Mausbewegung eine Inaktivitätswarnung an. Der Client meldet den Benutzer anschließend nach weiteren 2 Minuten Inaktivität ab. Wird keine Warnung gewünscht, setzen Sie inactivityWarning einfach auf eine höhere Zahl als inactivityLogout.</p>
+
+<h4>5.3.5. Externes Programm bei Anmeldung ausführen</h4>
+<p>Es ist möglich, den Libki-Client so zu konfigurieren, dass er ein weiteres Programm startet, sobald sich ein Benutzer erfolgreich bei Libki anmeldet.</p>
+<p>Beispiel:</p>
+<pre><code>[node]
+run_on_login="C:\\Program Files\\Internet Explorer\\iexplore.exe"</code></pre>
+<p>Im obigen Beispiel startet Libki den Internet Explorer, nachdem sich der Benutzer erfolgreich angemeldet hat.</p>
+<div class="note"><strong>Hinweis</strong>Sie können einfache Schrägstriche anstelle der doppelten Backslashes verwenden (z. B. <code>C:/Program Files/Internet Explorer/iexplore.exe</code>).</div>
+
+<h2 id="backup">6. Sicherung &amp; Wiederherstellung</h2>
+<div class="note"><strong>Wichtig</strong>Es wird DRINGEND empfohlen, Sicherungen und Wiederherstellungen der Datenbank nur dann durchzuführen, wenn das System gerade nicht genutzt wird!</div>
+
+<h3 id="db-sichern">6.1. Datenbank sichern</h3>
+<p>Das Sicherungsprogramm ist dafür vorgesehen, auf einem Server mit einem Libki-Benutzer verwendet zu werden.</p>
+<p>Im Home-Verzeichnis des Libki-Benutzers wird ein Sicherungsordner angelegt, in dem die Sicherungen gespeichert werden.</p>
+<p>Bitte beachten Sie, dass dadurch nur lokale Sicherungen erstellt werden. Es wird empfohlen, diese an einen sicheren Ort zu übertragen. Eine Anleitung zur automatischen Übertragung von Sicherungen auf einen FTP-Server wird später ergänzt.</p>
+
+<h4>6.1.1. Manuelle Sicherung erstellen</h4>
+<p>Führen Sie einfach <code>libki-backup</code> aus.</p>
+<p>Die Sicherung wird erstellt und unter <code>/home/libki/backups</code> gespeichert. Der Dateiname enthält Datum und Uhrzeit der Sicherung zur leichteren Identifizierung, z. B. <code>db_180706_19.30.sql</code>.</p>
+
+<h4>6.1.2. Automatische Sicherungen erstellen</h4>
+<p>Das Sicherungsprogramm verfügt über einen stillen Modus, ideal für den Fall, dass Sie keine Benutzereingabe oder Textausgabe wünschen. Führen Sie <code>libki-backup -s</code> aus, um es im stillen Modus auszuführen.</p>
+<p>Automatische Sicherungen funktionieren genauso wie manuelle Sicherungen, geben jedoch keinen Text aus. Die Sicherungsdatei wird direkt in <code>/home/libki/backups</code> erstellt.</p>
+<p>Wenn Sie Sicherungen automatisch nach einem Zeitplan erstellen möchten, geht dies am einfachsten über crontab. Ich werde nicht im Detail erklären, wie crontab funktioniert, gebe aber einige Beispielzeitpläne an.</p>
+<p>Beginnen Sie mit <code>crontab -e</code>. Sie werden wahrscheinlich den Standard-Editor verwenden wollen. Fügen Sie den Zeitplan am Ende der Datei hinzu.</p>
+<p><strong>Crontab-Beispiele</strong></p>
+<p>Tägliche Sicherung um 02:00 Uhr:</p>
+<pre><code>0 2 * * * /usr/local/bin/libki-backup -s</code></pre>
+<p>Sicherung jeden Sonntagabend:</p>
+<pre><code>0 21 * * SUN /usr/local/bin/libki-backup -s</code></pre>
+<p>Sicherung am ersten Tag jedes Monats um 01:15 Uhr:</p>
+<pre><code>15 1 1 * * /usr/local/bin/libki-backup -s</code></pre>
+
+<h3 id="dateien-sichern">6.2. Serverdateien sichern</h3>
+<p>Der einfachste Weg, die Serverdateien zu sichern, besteht darin, den Ordner libki-server im Home-Verzeichnis des Libki-Benutzers zu tarn. Es empfiehlt sich, diesen im selben Sicherungsordner wie die Datenbanksicherung abzulegen.</p>
+<pre><code>tar -pzcvf /home/libki/backups/libki-server-backup_190816.tar.gz /home/libki/libki-server</code></pre>
+
+<h3 id="db-wiederherstellen">6.3. Datenbanksicherung wiederherstellen</h3>
+<p>Das Wiederherstellen einer Datenbanksicherung löscht die aktuelle Datenbank; stellen Sie also sicher, dass Sie dies wirklich tun möchten.</p>
+<p>Wechseln Sie zunächst in den Ordner, der die wiederherzustellende Sicherung enthält. Wurde die Sicherung mit dem Sicherungsprogramm erstellt, ist dieser Ordner <code>/home/libki/backups</code>.</p>
+<pre><code>cd /home/libki/backups</code></pre>
+<p>Führen Sie nun das Programm aus und geben Sie an, welche Sicherung Sie wiederherstellen möchten.</p>
+<pre><code>libki-restore db_180706_19.30.sql</code></pre>
+<p>Ihre Datenbank befindet sich nun in dem Zustand, in dem sie sich zum Zeitpunkt der Sicherung befand.</p>
+
+<h3 id="dateien-wiederherstellen">6.4. Sicherung der Serverdateien wiederherstellen</h3>
+<p>Entfernen Sie zunächst die aktuellen Serverdateien und ersetzen Sie sie durch das Sicherungsarchiv.</p>
+<pre><code>service libki stop
+rm -rf /home/libki/libki-server
+tar -pzxvf /home/libki/backups/libki-server-backup_190816.tar.gz /home/libki/libki-server
+service libki start</code></pre>
+
+<h2 id="aktualisierung">7. Server aktualisieren</h2>
+
+<h3 id="vorsichtsmassnahmen">7.1. Vorsichtsmaßnahmen</h3>
+<p>Es wird DRINGEND empfohlen, den Server nur dann zu aktualisieren, wenn das System gerade nicht genutzt wird und der Dienst heruntergefahren ist.</p>
+<pre><code>service libki stop</code></pre>
+<p>Erstellen Sie anschließend eine Sicherung Ihres aktuellen Servers und Ihrer Datenbank, falls etwas nicht so reibungslos verläuft wie geplant. Die Aktualisierung ist nicht in jedem Fall vollständig stabil, insbesondere bei der Aktualisierung von sehr alten Installationen.</p>
+<p>Bitte lesen Sie den Abschnitt zur Sicherung durch, um zu erfahren, wie Sie Ihren Server sichern.</p>
+
+<h3 id="neueste-version">7.2. Neueste Version holen und Datenbank aktualisieren</h3>
+<p>Wechseln Sie in Ihren libki-server-Ordner und verwenden Sie <code>git pull</code>, um die neueste Version herunterzuladen. Führen Sie <code>installer/update_db.pl</code> aus, um die Datenbank zu aktualisieren.</p>
+<pre><code>cd libki-server
+git pull
+./installer/update_db.pl</code></pre>
+<p><strong>ACHTUNG:</strong> Wenn Sie von einer 2.x-Installation aktualisieren, funktioniert dies nicht. Sie müssen zunächst die neueste 2.x-Version r19.08 als Zwischenschritt verwenden, bevor Sie auf einen 3.x-Server aktualisieren, um die Datenbank zu konvertieren.</p>
+<pre><code>cd ~
+apt update && apt install unzip -y
+wget https://github.com/Libki/libki-server/archive/r19.08.zip
+unzip r19.08.zip
+./r19.08/installer/update_db.pl</code></pre>
+<p>Jetzt können Sie erneut das aktuelle <code>update_db.pl</code> ausführen.</p>
+
+<h3 id="serverdateien-aktualisieren">7.3. Serverdateien aktualisieren</h3>
+<p>Sobald die Datenbank auf dem neuesten Stand ist, müssen die Serverdateien aktualisiert werden. Löschen Sie die alten Serverdateien, ersetzen Sie sie durch die neuen und übertragen Sie deren Besitz an den Libki-Benutzer.</p>
+<pre><code>cd ~
+cp /home/libki/libki-server/libki_local.conf ./
+cp /home/libki/libki-server/log4perl.conf ./
+rm -rf /home/libki/libki-server
+cp -r libki-server /home/libki/libki-server
+cp ./libki_local.conf /home/libki/libki-server/
+cp ./log4perl.conf /home/libki/libki-server/
+chown -R libki:libki /home/libki/libki-server</code></pre>
+<p>Sobald dies erledigt ist, ist es Zeit, den Dienst wieder zu starten. Ist alles ordnungsgemäß verlaufen, sollte Ihr Libki-Server nun aktualisiert sein und genauso gut (oder sogar besser) funktionieren als zuvor.</p>
+<pre><code>service libki start</code></pre>
+
+<h2 id="beitraege">8. Mitwirken</h2>
+
+<h3 id="client-server">8.1. Client &amp; Server</h3>
+
+<h4>8.1.1. Fehlerbehebungen und neue Funktionen einreichen</h4>
+
+<h5>Patches formatieren</h5>
+<ul>
+<li>Erstellen Sie im entsprechenden GitHub-Repository (Client, Server, Handbuch usw.) ein Issue für das Anliegen (sowohl für Erweiterungen <strong>als auch</strong> für Fehlerbehebungen).
+  <ul><li>Je früher Sie ein Issue erstellen, desto besser. Es ist deutlich besser, ein Issue zu erstellen, in dem Sie Ihre Absicht ankündigen, eine neue Funktion zu entwickeln oder einen Fehler zu beheben, bevor Sie damit beginnen – so haben andere Community-Mitglieder die Gelegenheit, das Issue zu prüfen und Feedback zu geben.</li></ul>
+</li>
+<li>Die Betreffzeile Ihres/Ihrer Commits sollte mit „Issue XX: “ beginnen, gefolgt von einer Beschreibung dessen, was der Patch bewirkt.</li>
+<li>Fügen Sie einen Hyperlink zu dem GitHub-Issue hinzu, das dieser Patch löst.
+  <ul><li>GitHub erkennt dies und verknüpft den Commit automatisch mit dem Issue.</li></ul>
+</li>
+</ul>
+
+<h5>Libki-Server</h5>
+<p>Pull Requests für Funktionen und Fehlerbehebungen am Libki-Server sollten als Pull Requests über das <a href="https://github.com/Libki/libki-server">Libki-Server-GitHub-Repository</a> eingereicht werden.</p>
+
+<h5>Libki-Client</h5>
+<p>Pull Requests für Funktionen und Fehlerbehebungen am Libki-Client sollten als Pull Requests über das <a href="https://github.com/Libki/libki-client">Libki-Client-GitHub-Repository</a> eingereicht werden.</p>
+
+<h4>8.1.2. Coding-Richtlinien</h4>
+
+<h5>Coding-Richtlinien für den Server</h5>
+<ul>
+<li>Wenden Sie Perltidy auf neue oder geänderte Codeabschnitte an, bevor Sie diese einreichen.
+  <ul><li>Der Libki-Server wird mit einer .perltidyrc-Datei ausgeliefert, die beim Formatieren von Libki-Server-Code stets verwendet werden sollte.</li></ul>
+</li>
+</ul>
+
+<h3 id="uebersetzung">8.2. Übersetzung</h3>
+
+<h4>8.2.1. Den Server übersetzen</h4>
+
+<h5>Eine neue Übersetzung beginnen</h5>
+<p>Der Server wird über eine .po-Datei übersetzt, die sich in lib/Libki/I18N befindet. Die .po-Datei basiert auf einer Vorlage im selben Ordner namens messages.pot. Sie wird dynamisch aus dem Server generiert und anschließend mit einem eigenen Wörterbuch kombiniert.</p>
+<p>Bevor Sie etwas anderes tun, müssen wir die Sprache, in die wir übersetzen, zum Wörterbuch hinzufügen.</p>
+<pre><code>cd lib/Libki/I18N
+nano extras.pot</code></pre>
+<p>Der erste Teil dieses Wörterbuchs ist der wichtige Teil. Fügen Sie Ihre Sprache zum Sprachmenü hinzu. Folgen Sie derselben Syntax, die auch die anderen Sprachen verwenden, und ordnen Sie sie alphabetisch ein. Hier füge ich Dänisch hinzu, das würde also ganz oben stehen. Eine vollständige Liste der Sprachcodes finden Sie <a href="https://developer.chrome.com/webstore/i18n">hier</a>.</p>
+<pre><code># Language menu
+
+# Danish
+msgid "lang.da"
+msgstr "Dansk"
+
+# English
+msgid "lang.en"
+msgstr "English"</code></pre>
+<p>Sie müssen dies auch in allen anderen Sprachdateien ergänzen. Da diese zu unterschiedlichen Zeiten verfasst wurden, kann sich die Stelle am Anfang oder am Ende der Datei befinden.</p>
+<p>Aktualisieren wir nun messages.pot, indem wir eine neue Version generieren. Sie sollte immer dann neu generiert werden, wenn an einer Übersetzung gearbeitet wird. Um eine neue Version zu generieren, stellen Sie sicher, dass libki-server Ihr aktuelles Verzeichnis ist.</p>
+<pre><code>./script/utilities/translate.sh --generate</code></pre>
+<p>Kopieren Sie die Vorlage in Ihre Sprache und bearbeiten Sie sie.</p>
+<pre><code>cp lib/Libki/I18N/messages.pot da.po</code></pre>
+<p>Es wird dringend empfohlen, einen dedizierten .po-Editor zu verwenden. Wir empfehlen <a href="https://poedit.net">Poedit</a>.</p>
+
+<h5>Eine bestehende Übersetzung aktualisieren</h5>
+<p>Wenn Sie eine bestehende Übersetzung aktualisieren möchten, müssen Sie eine neue messages.pot generieren und Ihre Übersetzung so aktualisieren, dass sie auf der neuen messages.pot basiert. Im Rahmen des Aktualisierungsprozesses werden geänderte Inhalte markiert, damit sie leicht zu finden sind.</p>
+<p>Generieren Sie zunächst eine neue messages.pot. Stellen Sie sicher, dass libki-server Ihr aktuelles Verzeichnis ist.</p>
+<pre><code>./script/utilities/translate.sh --generate</code></pre>
+<p>Sobald diese generiert ist, aktualisieren Sie die bestehende Übersetzung. Auch dies muss aus libki-server heraus ausgeführt werden. Wir verwenden hier Dänisch als Beispielübersetzung.</p>
+<pre><code>./script/utilities/translate.sh --update lib/Libki/I18N/da.po</code></pre>
+<p>Eine Sicherungskopie wird in lib/Libki/I18N erstellt, falls Sie sie benötigen. Denken Sie nur daran, sie vor dem Erstellen eines Pull Requests zu löschen.</p>
+<p>Wenn Sie <a href="https://poedit.net">Poedit</a> zur Bearbeitung Ihrer Übersetzung verwenden, lässt sich die nächste unvollständige Zeile leicht mit Umschalt-Strg-Pfeil-nach-unten finden.</p>
+
+<h4>8.2.2. Den Client übersetzen</h4>
+<p>Der Client wird mit einer .qm-Datei übersetzt, die aus einer .ts-Datei generiert wird. Wir bearbeiten die .ts-Datei, und sobald das erledigt ist, generieren wir eine .qm-Datei. Sie benötigen Qt Linguist. Unter Linux ist das qt5-dev-tools: <code>sudo apt install qt5-dev-tools</code>. Unter Windows lädt man es am einfachsten von Thurasks GitHub herunter: <a href="https://github.com/thurask/Qt-Linguist/releases">https://github.com/thurask/Qt-Linguist/releases</a></p>
+<p>Zuerst müssen wir Libki.pro bearbeiten. Öffnen Sie die Datei und fügen Sie Ihre Sprache zur Liste der Übersetzungen hinzu. Verwenden Sie dieselbe Syntax wie die anderen Einträge. Hier füge ich Dänisch hinzu. Eine vollständige Liste der Sprachcodes finden Sie <a href="https://developer.chrome.com/webstore/i18n">hier</a>.</p>
+<pre><code>TRANSLATIONS = languages/libkiclient_fr.ts \
+        languages/libkiclient_sv.ts \
+        languages/libkiclient_da.ts</code></pre>
+<p>Als Nächstes wird die .ts-Datei erstellt. Dies erfolgt mit <code>lupdate Libki.pro</code>, entweder im Terminal, in cmd oder in Powershell.</p>
+<p>Verwenden Sie nun Qt Linguist, um Ihre .ts-Datei zu übersetzen. Sie befindet sich im Verzeichnis languages.</p>
+<p>Ist das erledigt, erstellen Sie eine .qm-Datei mit <code>lrelease Libki.pro</code>. Dadurch werden auch die anderen Sprachdateien aktualisiert.</p>
+<p>Fügen Sie schließlich die .qm-Datei zu libki.qrc hinzu. Hier habe ich Dänisch am Ende hinzugefügt.</p>
+<pre><code>...
+    &lt;qresource prefix="/"&gt;
+        &lt;file&gt;languages/libkiclient_fr.qm&lt;/file&gt;
+        &lt;file&gt;languages/libkiclient_sv.qm&lt;/file&gt;
+        &lt;file&gt;languages/libkiclient_es.qm&lt;/file&gt;
+    &lt;/qresource&gt;
+&lt;/RCC&gt;</code></pre>
+
+<h3 id="handbuch">8.3. Handbuch</h3>
+<p>Änderungsvorschläge können als Merge Request über GitHub an das Libki-Dokumentationsteam gesendet werden.</p>
+<p>Um dem Libki-Dokumentationsteam beizutreten, kontaktieren Sie bitte Kyle Hall über die <a href="https://lists.sourceforge.net/lists/listinfo/libki-developers">Libki-Entwickler-Mailingliste</a> oder den <a href="https://libki.slack.com/">Libki-Slack-Workspace</a>.</p>
+<p>Das Handbuch ist derzeit auf <a href="https://github.com/Libki/libki-manual">GitHub</a> verfügbar.</p>
+
+<h2 id="credits">9. Credits</h2>
+
+<h3 id="autoren">9.1. Autoren</h3>
+<ul>
+<li>Kyle M Hall &lt;<a href="mailto:kyle@kylehall.info">kyle@kylehall.info</a>&gt;</li>
+<li>Erik Öhrn &lt;<a href="mailto:erik.ohrn@gmail.com">erik.ohrn@gmail.com</a>&gt;</li>
+<li>Christopher Vella &lt;<a href="mailto:chris@calyx.net.au">chris@calyx.net.au</a>&gt;</li>
+<li>Luke Fritz &lt;<a href="mailto:ldfritz@gmail.com">ldfritz@gmail.com</a>&gt;</li>
+<li>Ian Walls &lt;<a href="mailto:ian@bywatersolutions.com">ian@bywatersolutions.com</a>&gt;</li>
+</ul>
+
+<footer>
+Version — Original zuletzt aktualisiert am 29.06.2026, 15:06:53 UTC.<br>
+Diese deutsche Übersetzung wurde inoffiziell erstellt und ersetzt nicht die englische Originalquelle unter <a href="https://github.com/Libki/libki-manual">github.com/Libki/libki-manual</a>.
+</footer>
+
+</body>
+</html>
