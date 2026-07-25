@@ -15,10 +15,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: Language menu
-msgid "lang.de"
-msgstr "Deutsch"
-
 
 #: root/dynamic/templates/administration/settings/index.tt:1138
 msgid "&nbsp;"
@@ -1936,6 +1932,10 @@ msgstr "der Server"
 msgid "lang.en"
 msgstr "Englisch"
 
+# German
+msgid "lang.de"
+msgstr "Deutsch"
+
 # French
 msgid "lang.fr"
 msgstr "Französisch"
@@ -2344,3 +2344,10 @@ msgstr "Wofür ist dieser API-Schlüssel?"
 
 msgid "API key type"
 msgstr "Typ des API-Schlüssels"
+
+# --- Ergänzung: fehlende c.loc()-Wrapper in der Benutzertabelle ---
+msgid "Yes"
+msgstr "Ja"
+
+msgid "Local"
+msgstr "Lokal"

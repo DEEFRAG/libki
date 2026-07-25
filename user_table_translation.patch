@@ -1,0 +1,57 @@
+diff --git a/root/dynamic/templates/administration/index.tt b/root/dynamic/templates/administration/index.tt
+index 2c4b78c..cb902a2 100644
+--- a/root/dynamic/templates/administration/index.tt
++++ b/root/dynamic/templates/administration/index.tt
+@@ -979,15 +979,48 @@ $(document).ready(function() {
+                 "data": "gratis_print_balance",
+                 "visible": [% IF GratisPrintingValue > 0 %]true[% ELSE %]false[% END %]
+             },
+-            { "data": "status" }, // User stats
++            {
++                "data": function(row) {
++                    return TranslateUserStatus( row.status );
++                }
++            }, // User stats
+             { "data": "notes" },
+-            { "data": "is_troublemaker" },
++            {
++                "data": function(row) {
++                    return row.is_troublemaker == 'Yes' ? '[% c.loc("Yes") %]' : '[% c.loc("No") %]';
++                }
++            },
+             { "data": "client_name" },
+-            { "data": "session_status" },
+-            { "data": "creation_source" }
++            {
++                "data": function(row) {
++                    return TranslateSessionStatus( row.session_status );
++                }
++            },
++            {
++                "data": function(row) {
++                    return TranslateCreationSource( row.creation_source );
++                }
++            }
+         ]
+     } );
+ 
++    function TranslateUserStatus( status ) {
++        return status == 'enabled'  ? '[% c.loc("Enabled") %]'  :
++               status == 'disabled' ? '[% c.loc("Disabled") %]' :
++               status;
++    }
++
++    function TranslateSessionStatus( status ) {
++        return status == 'active' ? '[% c.loc("Active") %]' :
++               status == 'locked' ? '[% c.loc("Locked") %]' :
++               ( status || '' );
++    }
++
++    function TranslateCreationSource( source ) {
++        return source && source.toLowerCase() == 'local' ? '[% c.loc("Local") %]' :
++               source;
++    }
++
+     /* Add a click handler to the rows */
+     $("#user-table tbody").click(function(event) {
+         // Clear selection from any existing rows

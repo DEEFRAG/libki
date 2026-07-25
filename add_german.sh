@@ -46,6 +46,18 @@ if [[ -f "${SCRIPT_DIR}/api_key_template.patch" ]]; then
   fi
 fi
 
+if [[ -f "${SCRIPT_DIR}/user_table_translation.patch" ]]; then
+  echo "--- Wende Template-Patch an (Übersetzung der Benutzertabelle: Status, Störenfried, Sitzungsstatus, Quelle) ---"
+  cd "${INSTALL_DIR}"
+  if git apply --check "${SCRIPT_DIR}/user_table_translation.patch" 2>/dev/null; then
+    git apply "${SCRIPT_DIR}/user_table_translation.patch"
+    echo "  Patch angewendet."
+  else
+    echo "  Hinweis: Patch konnte nicht automatisch angewendet werden (evtl. schon vorhanden oder Datei geändert)."
+    echo "  Bitte bei Bedarf manuell prüfen: ${SCRIPT_DIR}/user_table_translation.patch"
+  fi
+fi
+
 echo "--- Ergänze 'Deutsch' im Sprachmenü aller vorhandenen Sprachen ---"
 for f in "${I18N_DIR}"/*.po; do
   base="$(basename "$f")"
