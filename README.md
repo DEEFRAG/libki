@@ -18,4 +18,6 @@ libkiclient - Fertig kompilierte Libki Client 2.2.26 Binärdatei auf Deutsch fü
 
 libkiclient.exe - Der fertig kompilierte Libki Client Version 2.3.0 inklusive deutscher Sprache für Windows x86. Benötigt zum ausführen noch Qt 5.15.2 Framework Dateien.
 
+libkiclient_2.3.0_amd64.deb - Installationsdatei für den Libki Client Version 2.3.0 für Linux (Ubuntu 24, benötigt Qt5).
+
 setup_libki_kiosk_lockdown.sh - Ein Script welches Linux abhärtet, damit Anwender nicht mehr einfach so den Libki Client minimieren können und so weiter. Achtung: Könnte sein, dass man nach der Installation nicht mehr ins System rein kommt. Also bitte Backup/Prüfpunkt erstellen bevor dieses Script ausgeführt wird.
